@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "data.h"
+#include "order_data.h"
 #include "structures.h"
+#include "new_struct.h"
 
 void printlist(fix_t *head)
 {
@@ -107,10 +108,8 @@ int main(){
     if (head->next != NULL)
         head->next->previous = head;
 
-    strcpy(indicator, "cases");
-
     printlist(head);
-    head = decreasin(head, 12, 2020, indicator);
+    head = decreasin_cases(head, 12, 2020);
     printlist(head);
 
     printf("\n");

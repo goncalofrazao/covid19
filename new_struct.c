@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "data.h"
 #include "structures.h"
 
 fix_t *create_new_fix(char *country, char *initials, char *continent, long population){
@@ -20,7 +19,7 @@ var_t *create_new_var(int week, int year, char *indicator, int weekly_count, flo
     result->week = week;
     result->year = year;
     if(strcmp(indicator, "deaths") == 0){
-        result->weekly_deads = weekly_count;
+        result->weekly_deaths = weekly_count;
         result->racio_deaths = rate_14_day;
         result->cumulative_deaths = cumulative_count;
     }else{

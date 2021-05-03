@@ -16,7 +16,7 @@ typedef struct var{
     int week;
     int year;
     int weekly_cases;
-    int weekly_deads;
+    int weekly_deaths;
     int racio_cases;
     int racio_deaths;
     int cumulative_cases;
