@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "structures.h"
+#include "new_struct.h"
 #include "order_data.h"
 
 int high_or_low(char *word1, char *word2){
@@ -29,9 +30,7 @@ var_t *find_date(var_t *head, int week, int year){
     var_t *aux = head;
     while(aux != NULL){
         if(aux->week == week && aux->year == year){
-            aux->next = head;
-            head = aux;
-            return head;
+            return insert_at_head_var(head, aux);
         }else{
             aux = aux->next;
         }
