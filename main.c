@@ -51,7 +51,7 @@ int main(){
     rate_14_day = 148.3387374;
     cumulative_count = 50;
     tmp1 = create_new_fix(country, initials, continent, pop);
-    head = insert_at_head(head, tmp1);
+    head = insert_at_head_fix(head, tmp1);
     tmp2 = create_new_var(week, year, indicator, weekly_count, rate_14_day, cumulative_count);
     tmp1->var = insert_at_head_var(tmp1->var, tmp2);
     if (head->next != NULL)
@@ -68,7 +68,7 @@ int main(){
     rate_14_day = 0.039215869;
     cumulative_count = 100;
     tmp1 = create_new_fix(country, initials, continent, pop);
-    head = insert_at_head(head, tmp1);
+    head = insert_at_head_fix(head, tmp1);
     tmp2 = create_new_var(week, year, indicator, weekly_count, rate_14_day, cumulative_count);
     tmp1->var = insert_at_head_var(tmp1->var, tmp2);
     if (head->next != NULL)
@@ -85,7 +85,7 @@ int main(){
     rate_14_day = 0.000977188;
     cumulative_count = 10;
     tmp1 = create_new_fix(country, initials, continent, pop);
-    head = insert_at_head(head, tmp1);
+    head = insert_at_head_fix(head, tmp1);
     tmp2 = create_new_var(week, year, indicator, weekly_count, rate_14_day, cumulative_count);
     tmp1->var = insert_at_head_var(tmp1->var, tmp2);
     if (head->next != NULL)
@@ -102,7 +102,7 @@ int main(){
     rate_14_day = 0.805730354;
     cumulative_count = 150;
     tmp1 = create_new_fix(country, initials, continent, pop);
-    head = insert_at_head(head, tmp1);
+    head = insert_at_head_fix(head, tmp1);
     tmp2 = create_new_var(week, year, indicator, weekly_count, rate_14_day, cumulative_count);
     tmp1->var = insert_at_head_var(tmp1->var, tmp2);
     if (head->next != NULL)
