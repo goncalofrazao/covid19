@@ -5,13 +5,15 @@
 #include "order_data.h"
 #include "structures.h"
 #include "new_struct.h"
+#include "restrict_data.h"
 
 void printlist(fix_t *head)
 {
     fix_t *tmp1 = head;
     //var_t *tmp2 = head->head;
 
-    while (tmp1 != NULL){
+    while (tmp1 != NULL)
+    {
         printf("%s - %ld - %d - %d\n", tmp1->country, tmp1->population, tmp1->var->cumulative_cases, tmp1->var->cumulative_deaths);
         /*
         while(tmp2 != NULL){
@@ -25,11 +27,12 @@ void printlist(fix_t *head)
     printf("\n");
 }
 
-int main(){
+int main()
+{
     fix_t *head = NULL;
     fix_t *tmp1;
     var_t *tmp2;
-    
+
     char country[30];
     char initials[4];
     char continent[10];
@@ -56,7 +59,7 @@ int main(){
     tmp1->var = insert_at_head_var(tmp1->var, tmp2);
     if (head->next != NULL)
         head->next->previous = head;
-    
+
     strcpy(country, "Pakistan");
     strcpy(initials, "AUS");
     strcpy(continent, "Oceania");
@@ -116,8 +119,6 @@ int main(){
 
     return 0;
 }
-
-
 
 /*
 int main()

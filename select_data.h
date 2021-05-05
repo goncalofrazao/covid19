@@ -5,5 +5,4 @@
 
 var_t *max_cases(var_t *head);
 
-
 #endif
