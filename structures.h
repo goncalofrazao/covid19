@@ -24,6 +24,7 @@ typedef struct var
     int cumulative_cases;
     int cumulative_deaths;
     struct var *next;
+    struct var *previous;
 } var_t;
 //typedef struct var var_t;
 

@@ -49,9 +49,9 @@ var_t *find_date(var_t *head, int week, int year)
     return NULL;
 }
 
-fix_t *alphabetical(fix_t *head)
+void alphabetical(fix_t **head)
 {
-    fix_t *aux1 = head;
+    fix_t *aux1 = (*head);
     fix_t *aux2 = aux1->next;
     do
     {
@@ -66,27 +66,26 @@ fix_t *alphabetical(fix_t *head)
             if (aux2->next != NULL)
                 aux2->next->previous = aux1;
             aux2->next = aux1;
-            if (aux1 != head)
+            if (aux1 != (*head))
             {
                 aux1->previous->next = aux2;
                 aux2->previous = aux1->previous;
             }
             else
             {
-                head = aux2;
+                (*head) = aux2;
                 aux2->previous = NULL;
             }
             aux1->previous = aux2;
-            aux1 = head;
+            aux1 = (*head);
             aux2 = aux1->next;
         }
     } while (aux2 != NULL);
-    return head;
 }
 
-fix_t *population(fix_t *head)
+void population(fix_t **head)
 {
-    fix_t *aux1 = head;
+    fix_t *aux1 = (*head);
     fix_t *aux2 = aux1->next;
     do
     {
@@ -108,28 +107,27 @@ fix_t *population(fix_t *head)
                 if (aux2->next != NULL)
                     aux2->next->previous = aux1;
                 aux2->next = aux1;
-                if (aux1 != head)
+                if (aux1 != (*head))
                 {
                     aux1->previous->next = aux2;
                     aux2->previous = aux1->previous;
                 }
                 else
                 {
-                    head = aux2;
+                    (*head) = aux2;
                     aux2->previous = NULL;
                 }
                 aux1->previous = aux2;
-                aux1 = head;
+                aux1 = (*head);
                 aux2 = aux1->next;
             }
         }
     } while (aux2 != NULL);
-    return head;
 }
 
-fix_t *decreasin_cases(fix_t *head, int week, int year)
+void decreasin_cases(fix_t **head, int week, int year)
 {
-    fix_t *aux1 = head;
+    fix_t *aux1 = (*head);
     fix_t *aux2 = aux1->next;
     do
     {
@@ -153,28 +151,27 @@ fix_t *decreasin_cases(fix_t *head, int week, int year)
                 if (aux2->next != NULL)
                     aux2->next->previous = aux1;
                 aux2->next = aux1;
-                if (aux1 != head)
+                if (aux1 != (*head))
                 {
                     aux1->previous->next = aux2;
                     aux2->previous = aux1->previous;
                 }
                 else
                 {
-                    head = aux2;
+                    (*head) = aux2;
                     aux2->previous = NULL;
                 }
                 aux1->previous = aux2;
-                aux1 = head;
+                aux1 = (*head);
                 aux2 = aux1->next;
             }
         }
     } while (aux2 != NULL);
-    return head;
 }
 
-fix_t *decreasin_deaths(fix_t *head, int week, int year)
+void decreasin_deaths(fix_t **head, int week, int year)
 {
-    fix_t *aux1 = head;
+    fix_t *aux1 = (*head);
     fix_t *aux2 = aux1->next;
     do
     {
@@ -198,21 +195,20 @@ fix_t *decreasin_deaths(fix_t *head, int week, int year)
                 if (aux2->next != NULL)
                     aux2->next->previous = aux1;
                 aux2->next = aux1;
-                if (aux1 != head)
+                if (aux1 != (*head))
                 {
                     aux1->previous->next = aux2;
                     aux2->previous = aux1->previous;
                 }
                 else
                 {
-                    head = aux2;
+                    (*head) = aux2;
                     aux2->previous = NULL;
                 }
                 aux1->previous = aux2;
-                aux1 = head;
+                aux1 = (*head);
                 aux2 = aux1->next;
             }
         }
     } while (aux2 != NULL);
-    return head;
 }

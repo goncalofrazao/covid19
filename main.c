@@ -46,7 +46,7 @@ int main()
     strcpy(country, "Ireland");
     strcpy(initials, "AND");
     strcpy(continent, "Europe");
-    pop = 20;
+    pop = 100;
     week = 12;
     year = 2020;
     strcpy(indicator, "cases");
@@ -63,7 +63,7 @@ int main()
     strcpy(country, "Pakistan");
     strcpy(initials, "AUS");
     strcpy(continent, "Oceania");
-    pop = 20;
+    pop = 1400;
     week = 12;
     year = 2020;
     strcpy(indicator, "cases");
@@ -80,7 +80,7 @@ int main()
     strcpy(country, "Egypt");
     strcpy(initials, "EGY");
     strcpy(continent, "Africa");
-    pop = 20;
+    pop = 900;
     week = 12;
     year = 2020;
     strcpy(indicator, "cases");
@@ -97,7 +97,7 @@ int main()
     strcpy(country, "Portugal");
     strcpy(initials, "IRL");
     strcpy(continent, "Europe");
-    pop = 20;
+    pop = 1300;
     week = 12;
     year = 2020;
     strcpy(indicator, "cases");
@@ -112,7 +112,7 @@ int main()
         head->next->previous = head;
 
     printlist(head);
-    head = decreasin_cases(head, 12, 2020);
+    min_habitants(1, &head);
     printlist(head);
 
     printf("\n");
