@@ -37,7 +37,7 @@ fix_t *read_input(){
 
 
     while(fgets(str, MAXLEN, fp) != NULL){
-            fscanf(fp,"%s,%s,%s,%ld,%s,%d,%d-%d,%f,%d", country, initials, continent, &pop, indicator, &weekly_count, &year, &week, &rate_14_day, &cumulative_count);
+            sscanf(str, "%s,%s,%s,%ld,%s,%d,%d-%d,%f,%d", country, initials, continent, &pop, indicator, &weekly_count, &year, &week, &rate_14_day, &cumulative_count);
             exist_country = find_country(head, country);
 
             if(exist_country == NULL){
