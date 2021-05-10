@@ -30,20 +30,6 @@ void printlist(fix_t *head)
 
 int main()
 {
-    fix_t *head = NULL;
-    fix_t *tmp1;
-    var_t *tmp2;
-
-    char country[30];
-    char initials[4];
-    char continent[10];
-    long pop;
-    int week;
-    int year;
-    char indicator[7];
-    int weekly_count;
-    float rate_14_day;
-    int cumulative_count;
     /*
     strcpy(country, "Ireland");
     strcpy(initials, "AND");

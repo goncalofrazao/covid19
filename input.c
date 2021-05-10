@@ -8,36 +8,58 @@
 #include "input.h"
 
 
-int input(char country, char initials, char continent, long pop, char indicator, int week, int year, float rate_14_day, int cumulative_count, fix_t *tmp1, fix_t *head, var_t *tmp2){
+fix_t *read_input(){
 
     FILE *fp;
-    fix_t *i;
-    var_t *j;
+
+    fix_t *head = NULL;
+    fix_t *exist_country;
+    var_t *exist_date;
+
+    char country[30];
+    char initials[4];
+    char continent[10];
+    long pop;
+    int week;
+    int year;
+    char indicator[7];
+    int weekly_count;
+    float rate_14_day;
+    int cumulative_count;
 
     if((fp = fopen ("covid19_w_t01.csv", "r"))==NULL)
     {
         printf("Erro na abertura do ficheiro");
         return -1;
     }
-    //FALTA DAR SKIP NA PRIMEIRA LINHA
-    while(fscanf(fp,"%s,%s,%s,%ld,%s,%d,%d,%f,%d",&country, &initials, &continent, &pop, &week, &year, &rate_14_day, &cumulative_count)!= EOF){
-            i = find_country(head, country);
+    fscanf(fp, "%*[^\n]\n");
 
-            if(i==NULL){
-                tmp1 = create_new_fix(country, initials, continent, pop);
-                head = insert_at_head_fix(head, tmp1);
-                tmp2 = create_new_var(week, year, indicator, weekly_count, rate_14_day, cumulative_count);
-                tmp1->var = insert_at_head_var(tmp1->var, tmp2);
+
+    while(fscanf(fp,"%s,%s,%s,%ld,%s,%d,%d,%f,%d", country, initials, continent, &pop, indicator, &weekly_count, &year, &rate_14_day, &cumulative_count) != EOF){
+            exist_country = find_country(head, country);
+
+            if(exist_country == NULL){
+                exist_country = create_new_fix(country, initials, continent, pop);
+                head = insert_at_head_fix(head, exist_country);
+                exist_date = create_new_var(weekly_count, year, indicator, weekly_count, rate_14_day, cumulative_count);
+                exist_country->var = insert_at_head_var(exist_country->var, exist_date);
                 if (head->next != NULL)
                     head->next->previous = head;
             }
             else{
-                j= find_date(head, week, year);
-                if(j==NULL){
-                        //nao ha data
-                    }
+                exist_date = find_date(head, weekly_count, year);
+                if(exist_date == NULL){
+                    exist_date = create_new_var(weekly_count, year, indicator, weekly_count, rate_14_day, cumulative_count);
+                    exist_country->var = insert_at_head_var(exist_country->var, exist_date);
+                    if (head->next != NULL)
+                        head->next->previous = head;
+                }
                 else{
-                    //quando ha data
+                    if(strcmp(indicator, "deaths") == 0){
+                        update_struct_deaths(exist_date, weekly_count, rate_14_day, cumulative_count);
+                    }else{
+                        update_struct_cases(exist_date, weekly_count, rate_14_day, cumulative_count);
+                    }
                 }
 
             }
@@ -45,10 +67,6 @@ int input(char country, char initials, char continent, long pop, char indicator,
 
     }
 
-
-
-
-
     fclose(fp);
-    return 0;
+    return head;
 }
