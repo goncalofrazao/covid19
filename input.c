@@ -30,12 +30,12 @@ fix_t *read_input(){
     if((fp = fopen ("covid19_w_t01.csv", "r"))==NULL)
     {
         printf("Erro na abertura do ficheiro");
-        return -1;
+        return NULL;
     }
     fscanf(fp, "%*[^\n]\n");
 
 
-    while(fscanf(fp,"%s,%s,%s,%ld,%s,%d,%d,%f,%d", country, initials, continent, &pop, indicator, &weekly_count, &year, &rate_14_day, &cumulative_count) != EOF){
+    while(fscanf(fp,"%s,%s,%s,%ld,%s,%d,%d-%d,%f,%d", country, initials, continent, &pop, indicator, &weekly_count, &year, &week, &rate_14_day, &cumulative_count) != EOF){
             exist_country = find_country(head, country);
 
             if(exist_country == NULL){
@@ -47,7 +47,7 @@ fix_t *read_input(){
                     head->next->previous = head;
             }
             else{
-                exist_date = find_date(head, weekly_count, year);
+                exist_date = find_date(exist_country->var, weekly_count, year);
                 if(exist_date == NULL){
                     exist_date = create_new_var(weekly_count, year, indicator, weekly_count, rate_14_day, cumulative_count);
                     exist_country->var = insert_at_head_var(exist_country->var, exist_date);
