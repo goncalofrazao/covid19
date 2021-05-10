@@ -16,6 +16,7 @@ fix_t *read_input(){
     fix_t *exist_country;
     var_t *exist_date;
 
+    char str[MAXLEN];
     char country[30];
     char initials[4];
     char continent[10];
@@ -35,7 +36,8 @@ fix_t *read_input(){
     fscanf(fp, "%*[^\n]\n");
 
 
-    while(fscanf(fp,"%s,%s,%s,%ld,%s,%d,%d-%d,%f,%d", country, initials, continent, &pop, indicator, &weekly_count, &year, &week, &rate_14_day, &cumulative_count) != EOF){
+    while(fgets(str, MAXLEN, fp) != NULL){
+            fscanf(fp,"%s,%s,%s,%ld,%s,%d,%d-%d,%f,%d", country, initials, continent, &pop, indicator, &weekly_count, &year, &week, &rate_14_day, &cumulative_count);
             exist_country = find_country(head, country);
 
             if(exist_country == NULL){
