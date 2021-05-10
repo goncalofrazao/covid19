@@ -6,6 +6,7 @@
 #include "structures.h"
 #include "new_struct.h"
 #include "restrict_data.h"
+#include "input.h"
 
 void printlist(fix_t *head)
 {
@@ -43,6 +44,7 @@ int main()
     int weekly_count;
     float rate_14_day;
     int cumulative_count;
+    /*
     strcpy(country, "Ireland");
     strcpy(initials, "AND");
     strcpy(continent, "Europe");
@@ -53,6 +55,11 @@ int main()
     weekly_count = 108;
     rate_14_day = 148.3387374;
     cumulative_count = 50;
+    */
+
+    input(country, initials, continent, pop, indicator, week, year, rate_14_day, cumulative_count, tmp1, head, tmp2);
+
+    /*
     tmp1 = create_new_fix(country, initials, continent, pop);
     head = insert_at_head_fix(head, tmp1);
     tmp2 = create_new_var(week, year, indicator, weekly_count, rate_14_day, cumulative_count);
@@ -110,6 +117,7 @@ int main()
     tmp1->var = insert_at_head_var(tmp1->var, tmp2);
     if (head->next != NULL)
         head->next->previous = head;
+        */
 
     printlist(head);
     min_habitants(1, &head);
@@ -125,12 +133,12 @@ int main()
 {
     node_t *head = NULL;
     node_t *tmp;
-    
+
     for (int i = 1; i < 10; i++){
         tmp = create_new_node(i);
         head = insert_at_head(head, tmp);
     }
-    
+
     printlist(head);
 
     return 0;
