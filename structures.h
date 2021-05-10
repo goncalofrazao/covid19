@@ -11,7 +11,6 @@ typedef struct fix //linked list with country data
     struct fix *next;     //pointer to next element of the list
     struct fix *previous; //pointer to the previous element of the list
 } fix_t;
-//typedef struct fix fix_t;
 
 typedef struct var //linked list with weekly data
 {
@@ -26,6 +25,5 @@ typedef struct var //linked list with weekly data
     struct var *next;      //pointer to next list element
     struct var *previous;  //pointer to previous list element
 } var_t;
-//typedef struct var var_t;
 
 #endif
