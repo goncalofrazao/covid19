@@ -28,8 +28,15 @@ void printlist(fix_t *head)
     printf("\n");
 }
 
+
 int main()
 {
+    fix_t *head;
+    head = read_input();
+
+    return 0;
+}
+/*
     fix_t *head;
     head = read_input();
 
@@ -37,6 +44,4 @@ int main()
     printlist(head);
 
     printf("\n");
-
-    return 0;
-}
+*/

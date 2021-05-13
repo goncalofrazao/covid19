@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #ifndef _STRUCTURES_
 #define _STRUCTURES_
 

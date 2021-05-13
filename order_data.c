@@ -6,6 +6,7 @@
 #include "new_struct.h"
 #include "order_data.h"
 
+/*
 int high_or_low(char *word1, char *word2)
 {
     if (*(word1) < *(word2))
@@ -15,6 +16,7 @@ int high_or_low(char *word1, char *word2)
     else
         return high_or_low(++word1, ++word2);
 }
+*/
 
 fix_t *find_country(fix_t *head, char *country)
 {
@@ -55,7 +57,7 @@ void alphabetical(fix_t **head)
     fix_t *aux2 = aux1->next;
     do
     {
-        if (high_or_low(aux1->country, aux2->country) == 1)
+        if (strcmp(aux1->country, aux2->country) < 0)
         {
             aux1 = aux2;
             aux2 = aux2->next;
@@ -96,7 +98,7 @@ void population(fix_t **head)
         }
         else
         {
-            if (aux1->population == aux2->population && high_or_low(aux1->country, aux2->country) == 1)
+            if (aux1->population == aux2->population && strcmp(aux1->country, aux2->country) < 0)
             {
                 aux1 = aux2;
                 aux2 = aux2->next;
@@ -140,7 +142,7 @@ void decreasin_cases(fix_t **head, int week, int year)
         }
         else
         {
-            if ((aux1->var->cumulative_cases == aux2->var->cumulative_cases) && (high_or_low(aux1->country, aux2->country) == 1))
+            if ((aux1->var->cumulative_cases == aux2->var->cumulative_cases) && (strcmp(aux1->country, aux2->country) < 0))
             {
                 aux1 = aux2;
                 aux2 = aux2->next;
@@ -184,7 +186,7 @@ void decreasin_deaths(fix_t **head, int week, int year)
         }
         else
         {
-            if ((aux1->var->cumulative_deaths == aux2->var->cumulative_deaths) && (high_or_low(aux1->country, aux2->country) == 1))
+            if ((aux1->var->cumulative_deaths == aux2->var->cumulative_deaths) && (strcmp(aux1->country, aux2->country) < 0))
             {
                 aux1 = aux2;
                 aux2 = aux2->next;
