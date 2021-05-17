@@ -46,7 +46,7 @@ fix_t *find_country(fix_t *head, char *country)
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-fix_t *create_country(char *name, char *initials, char *continent, uint32_t population)
+fix_t *create_country(char *name, char *initials, char *continent, unsigned long population)
 {
     fix_t *aux = malloc(sizeof(fix_t));
     strcpy(aux->name, name);

@@ -11,7 +11,7 @@ typedef struct fix //linked list with country data
     char name[30];     //name of the country
     char initials[4];     //initials of the country
     char continent[10];   //continent of the country
-    uint32_t population;      //population of the country
+    unsigned long population;      //population of the country
     struct var *var;      //pointer to the head of the list with weekly data
     struct fix *next;     //pointer to next element of the list
 } fix_t;

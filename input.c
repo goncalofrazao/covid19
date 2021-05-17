@@ -7,7 +7,8 @@
 #include "structures.h"
 #include "new_struct.h"
 
-fix_t *read_input(){
+fix_t *read_input()
+{
 
     FILE *fp;
 
@@ -24,7 +25,7 @@ fix_t *read_input(){
     char country[30];
     char initials[4];
     char continent[10];
-    uint32_t population;
+    unsigned long population;
     int week;
     int year;
     char indicator[7];
@@ -41,7 +42,6 @@ fix_t *read_input(){
 
 
     while(fgets(str, MAXLEN, fp) != NULL){
-        //sscanf(str, "%s,%s,%s,%ld,%s,%d,%d-%d,%f,%d", country, initials, continent, &pop, indicator, &weekly_count, &year, &week, &rate_14_day, &cumulative_count);
         stringlen = strlen(str);
         
         if(str[stringlen - 1] == '\n')
@@ -92,7 +92,6 @@ fix_t *read_input(){
                 update_date(aux2, indicator, weekly_count, rate_14_day, cumulative_count);
             }
         }
-        printf("%s -- next: %s\n", aux1->name, aux1->next->name);
     }
     fclose(fp);
     return head;
