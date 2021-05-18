@@ -4,7 +4,7 @@
 
 #include "structures.h"
 #include "input.h"
-
+#include "order_data.h"
 
 void printlist(fix_t *head)
 {
@@ -25,6 +25,7 @@ int main(int argc, char **argv)
     char *what_to_read = (char*) malloc(strlen(argv[1]) * sizeof(char));
     strcpy(what_to_read, argv[1]);
     head = read_input(what_to_read);
+    head = alpha_order(head);
     output(head);
     return 0;
 }
