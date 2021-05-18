@@ -7,7 +7,7 @@
 #include "structures.h"
 #include "new_struct.h"
 
-fix_t *read_input()
+fix_t *read_input(char *what_to_read)
 {
 
     FILE *fp;
@@ -58,41 +58,61 @@ fix_t *read_input()
         while((token = strtok(NULL,",")) != NULL && i < 9){
             column[i++] = token;
         }
+        if (strcmp(column[2], what_to_read) == 0 || strcmp(what_to_read, "all") == 0){
+            strcpy(country, column[0]);
+            strcpy(initials, column[1]);
+            strcpy(continent, column[2]);
+            population = (unsigned) atol(column[3]);
+            strcpy(indicator, column[4]);
+            weekly_count = atoi(column[5]);
+            sscanf(column[6], "%d-%d", &year, &week);
+            if(i == 8){
+                cumulative_count = atoi(column[7]);
+                rate_14_day = 0;
+            }
+            else{
+                rate_14_day = atof(column[7]);
+                cumulative_count = atoi(column[8]);
+            }
 
-        strcpy(country, column[0]);
-        strcpy(initials, column[1]);
-        strcpy(continent, column[2]);
-        population = (unsigned) atol(column[3]);
-        strcpy(indicator, column[4]);
-        weekly_count = atoi(column[5]);
-        sscanf(column[6], "%d-%d", &year, &week);
-        if(i == 8){
-            cumulative_count = atoi(column[7]);
-            rate_14_day = 0;
-        }
-        else{
-            rate_14_day = atof(column[7]);
-            cumulative_count = atoi(column[8]);
-        }
-
-        aux1 = find_country(head, country);
-        if(aux1 == NULL){
-            aux1 = create_country(country, initials, continent, population);
-            head = insert_fix(aux1, head);
-            aux2 = create_date(year, week, indicator, weekly_count, rate_14_day, cumulative_count);
-            aux1->var = insert_var(aux2, aux1->var);
-        }
-        else{
-            aux2 = find_date(aux1->var, weekly_count, year);
-            if(aux2 == NULL){
+            aux1 = find_country(head, country);
+            if(aux1 == NULL){
+                aux1 = create_country(country, initials, continent, population);
+                head = insert_fix(aux1, head);
                 aux2 = create_date(year, week, indicator, weekly_count, rate_14_day, cumulative_count);
                 aux1->var = insert_var(aux2, aux1->var);
             }
             else{
-                update_date(aux2, indicator, weekly_count, rate_14_day, cumulative_count);
+                aux2 = find_date(aux1->var, weekly_count, year);
+                if(aux2 == NULL){
+                    aux2 = create_date(year, week, indicator, weekly_count, rate_14_day, cumulative_count);
+                    aux1->var = insert_var(aux2, aux1->var);
+                }
+                else{
+                    update_date(aux2, indicator, weekly_count, rate_14_day, cumulative_count);
+                }
             }
         }
     }
     fclose(fp);
     return head;
+}
+
+void output(fix_t *head)
+{
+    fix_t *aux1;
+    var_t *aux2;
+    FILE *fp = fopen("output.csv", "w");
+    while(head != NULL){
+        while(head->var != NULL){
+            fprintf(fp, "%s ,%s, %lu, %d-%d\n", head->continent, head->name, head->population, head->var->year, head->var->week);
+            aux2 = head->var->next;
+            free(head->var);
+            head->var = aux2;
+        }
+        aux1 = head->next;
+        free(head);
+        head = aux1;
+    }
+    fclose(fp);
 }

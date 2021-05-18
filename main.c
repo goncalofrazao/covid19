@@ -5,33 +5,27 @@
 #include "structures.h"
 #include "input.h"
 
-/*
+
 void printlist(fix_t *head)
 {
-    fix_t *tmp1 = head;
-    //var_t *tmp2 = head->head;
 
-    while (tmp1 != NULL)
+    while (head != NULL)
     {
-        printf("%s - %ld - %d - %d\n", tmp1->country, tmp1->population, tmp1->var->cumulative_cases, tmp1->var->cumulative_deaths);
+        printf("%s -- %lu\n", head->name, head->population);
         
-        while(tmp2 != NULL){
-            printf("%s, %s, %s, %ld ", tmp1->country, tmp1->initials, tmp1->continent, tmp1->population);
-            printf("%d-%d, %d, %d, %d, %d, %d, %d\n", tmp2->week, tmp2->year, tmp2->weekly_cases, tmp2->weekly_deads, tmp2->racio_cases, tmp2->racio_deads, tmp2->cumulative_cases, tmp2->cumulative_deads);
-            tmp2 = tmp2->next;
-        }
-        
-        tmp1 = tmp1->next;
+        head = head->next;
     }
     printf("\n");
 }
-*/
 
-int main()
+
+int main(int argc, char **argv)
 {
     fix_t *head;
-    head = read_input();
-
+    char *what_to_read = (char*) malloc(strlen(argv[1]) * sizeof(char));
+    strcpy(what_to_read, argv[1]);
+    head = read_input(what_to_read);
+    output(head);
     return 0;
 }
 /*
