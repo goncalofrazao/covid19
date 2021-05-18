@@ -31,7 +31,7 @@ fix_t *alpha_order(fix_t *head)
     // loop to go through all list
     while(aux2->next != NULL){
         // aux 2 points to aux 1 next struct
-        if(strcmp(aux2->name, aux2->next->name) < 0){   // change elements order if they are not ordered
+        if(strcmp(aux2->name, aux2->next->name) > 0){   // change elements order if they are not ordered
             aux1->next = swap(aux2, aux2->next);
             aux1 = &head_struct;
         }else{                                          // go next elements
