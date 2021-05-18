@@ -11,7 +11,7 @@
  * 
  * Arguments: fix_t *head -- head of the list to order
  * 
- * Return: head -- head of the list ordered
+ * Return: head_struct.next -- head of the list ordered
  * 
  * Description: This funtion orders a list alphabetically.
  *
@@ -31,11 +31,11 @@ fix_t *alpha_order(fix_t *head)
     // loop to go through all list
     while(aux2->next != NULL){
         // aux 2 points to aux 1 next struct
-        if(strcmp(aux2->name, aux2->next->name) > 0){   // change elements order if they are not ordered
+        if(strcmp(aux2->name, aux2->next->name) < 0){   // go next elements
+            aux1 = aux1->next;
+        }else{                                          // change elements order if they are not ordered
             aux1->next = swap(aux2, aux2->next);
             aux1 = &head_struct;
-        }else{                                          // go next elements
-            aux1 = aux1->next;
         }
         aux2 = aux1->next;
     }
@@ -59,4 +59,42 @@ fix_t *swap(fix_t *left, fix_t *right)
     left->next = right->next;
     right->next = left;
     return right;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Funtion name: pop_order
+ * 
+ * Arguments: fix_t *head -- head of the list to order
+ * 
+ * Return: head_struct.next -- head of the list ordered
+ * 
+ * Description: This funtion orders a list alphabetically.
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+fix_t *pop_order(fix_t *head)
+{
+    fix_t head_struct;             // auxiliar struct to save head
+    head_struct.next = head;
+    fix_t *aux1 = &head_struct;
+    fix_t *aux2 = aux1->next;
+
+    // ends funtion if list has less than 2 elements
+    if(head == NULL || head->next == NULL)
+        return head;
+    
+    // loop to go through all list
+    while(aux2->next != NULL){
+        // aux 2 points to aux 1 next struct
+        if(aux2->population > aux2->next->population){   // change elements order if they are not ordered
+            aux1 = aux1->next;
+        }else if(aux2->population == aux2->next->population && strcmp(aux2->name, aux2->next->name) < 0){
+            aux1 = aux1->next;
+        }else{
+            aux1->next = swap(aux2, aux2->next);
+            aux1 = &head_struct;
+        }
+        aux2 = aux1->next;
+    }
+    return head_struct.next;
 }

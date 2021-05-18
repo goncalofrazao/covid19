@@ -6,27 +6,14 @@
 #include "input.h"
 #include "order_data.h"
 
-void printlist(fix_t *head)
-{
-
-    while (head != NULL)
-    {
-        printf("%s -- %lu\n", head->name, head->population);
-        
-        head = head->next;
-    }
-    printf("\n");
-}
-
-
 int main(int argc, char **argv)
 {
     fix_t *head;
     char *what_to_read = (char*) malloc(strlen(argv[1]) * sizeof(char));
     strcpy(what_to_read, argv[1]);
     head = read_input(what_to_read);
-    head = alpha_order(head);
-    output(head);
+    head = pop_order(head);
+    _op(head);
     return 0;
 }
 /*

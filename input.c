@@ -98,6 +98,25 @@ fix_t *read_input(char *what_to_read)
     return head;
 }
 
+void _op(fix_t *head)
+{
+    fix_t *aux1;
+    var_t *aux2;
+    FILE *fp = fopen("output.csv", "w");
+    while(head != NULL){
+        fprintf(fp, "%s, %lu\n", head->name, head->population);
+        while(head->var != NULL){
+            aux2 = head->var->next;
+            free(head->var);
+            head->var = aux2;
+        }
+        aux1 = head->next;
+        free(head);
+        head = aux1;
+    }
+    fclose(fp);
+}
+
 void output(fix_t *head)
 {
     fix_t *aux1;
@@ -105,7 +124,7 @@ void output(fix_t *head)
     FILE *fp = fopen("output.csv", "w");
     while(head != NULL){
         while(head->var != NULL){
-            fprintf(fp, "%s ,%s, %lu, %d-%d\n", head->continent, head->name, head->population, head->var->year, head->var->week);
+            fprintf(fp, "%s, %lu, %d-%d\n", head->name, head->population, head->var->year, head->var->week);
             aux2 = head->var->next;
             free(head->var);
             head->var = aux2;
