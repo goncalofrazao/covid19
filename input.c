@@ -124,7 +124,7 @@ void output(fix_t *head)
     FILE *fp = fopen("output.csv", "w");
     while(head != NULL){
         while(head->var != NULL){
-            fprintf(fp, "%s, %lu, %d-%d\n", head->name, head->population, head->var->year, head->var->week);
+            fprintf(fp, "%s, %d-%d, %d, %f, %d, %d, %f, %d\n", head->name, head->var->year, head->var->week, head->var->weekly_cases, head->var->rate_cases, head->var->cumulative_cases, head->var->weekly_deaths, head->var->rate_deaths, head->var->cumulative_deaths);
             aux2 = head->var->next;
             free(head->var);
             head->var = aux2;

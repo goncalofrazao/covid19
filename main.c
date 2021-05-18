@@ -9,19 +9,10 @@
 int main(int argc, char **argv)
 {
     fix_t *head;
-    char *what_to_read = (char*) malloc(strlen(argv[1]) * sizeof(char));
+    char what_to_read[20];
     strcpy(what_to_read, argv[1]);
     head = read_input(what_to_read);
     head = pop_order(head);
-    _op(head);
+    output(head);
     return 0;
 }
-/*
-    fix_t *head;
-    head = read_input();
-
-    alphabetical(&head);   
-    printlist(head);
-
-    printf("\n");
-*/
