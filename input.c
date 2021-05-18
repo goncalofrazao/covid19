@@ -80,7 +80,7 @@ fix_t *read_input()
             aux1 = create_country(country, initials, continent, population);
             head = insert_fix(aux1, head);
             aux2 = create_date(year, week, indicator, weekly_count, rate_14_day, cumulative_count);
-            head->var = insert_var(aux2, head->var);
+            aux1->var = insert_var(aux2, aux1->var);
         }
         else{
             aux2 = find_date(aux1->var, weekly_count, year);

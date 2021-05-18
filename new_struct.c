@@ -48,11 +48,14 @@ fix_t *find_country(fix_t *head, char *country)
 
 fix_t *create_country(char *name, char *initials, char *continent, unsigned long population)
 {
+    // allocate memory
     fix_t *aux = malloc(sizeof(fix_t));
+    // set parameters
     strcpy(aux->name, name);
     strcpy(aux->initials, initials);
     strcpy(aux->continent, continent);
     aux->population = population;
+    // initialize nexts = NULL
     aux->next = NULL;
     aux->var = NULL;
     return aux;
@@ -61,20 +64,20 @@ fix_t *create_country(char *name, char *initials, char *continent, unsigned long
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Funtion name: insert_fix
  * 
- * Arguments: fix_t *aux -- pointer to struct to insert in list
+ * Arguments: fix_t *insert -- pointer to struct to insert in list
  *            fix_t *head -- head of the list to insert
  * 
- * Return: aux -- new head of the list
+ * Return: insert -- new head of the list
  * 
  * Description: This function puts head pointing to struct to insert,
  *              and next of struct to insert pointing into old head.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-fix_t *insert_fix(fix_t *aux, fix_t *head)
+fix_t *insert_fix(fix_t *insert, fix_t *head)
 {
-    aux->next = head;
-    return aux;
+    insert->next = head;       // next of struct to insert points to old head
+    return insert;             // return new head
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -122,15 +125,17 @@ var_t *find_date(var_t *head, int year, int week)
 
 var_t *create_date(int year, int week, char *indicator, int weekly_count, double rate_14_day, int cumulative_count)
 {
+    // allocate memory for the struct
     var_t *aux = malloc(sizeof(var_t));
+    // set global stats
     aux->week = week;
     aux->year = year;
     aux->next = NULL;
-    if(strcmp(indicator, "cases") == 0){
+    if(strcmp(indicator, "cases") == 0){        // set cases stats
         aux->weekly_cases = weekly_count;
         aux->rate_cases = rate_14_day;
         aux->cumulative_cases = cumulative_count;
-    }else{
+    }else{                                      // set deaths stats
         aux->weekly_deaths = weekly_count;
         aux->rate_deaths = rate_14_day;
         aux->cumulative_deaths = cumulative_count;
@@ -155,11 +160,11 @@ var_t *create_date(int year, int week, char *indicator, int weekly_count, double
 
 void update_date(var_t *aux, char *indicator, int weekly_count, double rate_14_day, int cumulative_count)
 {
-    if(strcmp(indicator, "cases") == 0){
+    if(strcmp(indicator, "cases") == 0){        // update cases stats
         aux->weekly_cases = weekly_count;
         aux->rate_cases = rate_14_day;
         aux->cumulative_cases = cumulative_count;
-    }else{
+    }else{                                      // update deaths stats
         aux->weekly_deaths = weekly_count;
         aux->rate_deaths = rate_14_day;
         aux->cumulative_deaths = cumulative_count;
@@ -169,18 +174,18 @@ void update_date(var_t *aux, char *indicator, int weekly_count, double rate_14_d
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Funtion name: insert_var
  * 
- * Arguments: var_t *aux -- pointer to struct to insert in list
+ * Arguments: var_t *insert -- pointer to struct to insert in list
  *            var_t *head -- head of the list to insert
  * 
- * Return: aux -- new head of the list
+ * Return: insert -- new head of the list
  * 
  * Description: This function puts head pointing to struct to insert,
  *              and next of struct to insert pointing into old head.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-var_t *insert_var(var_t *aux, var_t *head)
+var_t *insert_var(var_t *insert, var_t *head)
 {
-    aux->next = head;
-    return aux;
+    insert->next = head;       // next of struct to insert points to old head
+    return insert;             // return new head
 }

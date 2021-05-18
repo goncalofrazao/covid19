@@ -14,5 +14,5 @@ main.o: main.c structures.h
 input.o: input.c input.h
 new_struct.o: new_struct.c new_struct.h
 
-clean:
+c:
 	rm -f $(PROJECT_NAME) *.o
