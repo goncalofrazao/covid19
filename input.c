@@ -83,7 +83,7 @@ fix_t *read_input(char *what_to_read)
                 aux1->var = insert_var(aux2, aux1->var);
             }
             else{
-                aux2 = find_date(aux1->var, weekly_count, year);
+                aux2 = find_date(aux1->var, year, week);
                 if(aux2 == NULL){
                     aux2 = create_date(year, week, indicator, weekly_count, rate_14_day, cumulative_count);
                     aux1->var = insert_var(aux2, aux1->var);

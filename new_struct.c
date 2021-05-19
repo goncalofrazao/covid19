@@ -49,7 +49,7 @@ fix_t *find_country(fix_t *head, char *country)
 fix_t *create_country(char *name, char *initials, char *continent, unsigned long population)
 {
     // allocate memory
-    fix_t *aux = malloc(sizeof(fix_t));
+    fix_t *aux = (fix_t*) malloc(sizeof(fix_t));
     // set parameters
     strcpy(aux->name, name);
     strcpy(aux->initials, initials);
@@ -126,7 +126,7 @@ var_t *find_date(var_t *head, int year, int week)
 var_t *create_date(int year, int week, char *indicator, int weekly_count, double rate_14_day, int cumulative_count)
 {
     // allocate memory for the struct
-    var_t *aux = malloc(sizeof(var_t));
+    var_t *aux = (var_t*) malloc(sizeof(var_t));
     // set global stats
     aux->week = week;
     aux->year = year;

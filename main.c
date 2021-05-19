@@ -9,10 +9,12 @@
 int main(int argc, char **argv)
 {
     fix_t *head;
+    int year = atoi(argv[2]);
+    int week = atoi(argv[3]);
     char what_to_read[20];
     strcpy(what_to_read, argv[1]);
     head = read_input(what_to_read);
-    head = pop_order(head);
+    head = inf_order(head, year, week);
     output(head);
     return 0;
 }

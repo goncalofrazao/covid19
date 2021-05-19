@@ -6,5 +6,6 @@
 fix_t *alpha_order(fix_t *head);
 fix_t *swap(fix_t *left, fix_t *right);
 fix_t *pop_order(fix_t *head);
+fix_t *inf_order(fix_t *head, int year, int week);
 
 #endif
