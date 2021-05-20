@@ -6,6 +6,7 @@
 #include "input.h"
 #include "order_data.h"
 #include "select_data.h"
+#include "restrict_data.h"
 
 int main(int argc, char **argv)
 {
@@ -16,12 +17,15 @@ int main(int argc, char **argv)
     char what_to_read[20];
     strcpy(what_to_read, argv[1]);
     head = read_input(what_to_read);
+    
+    head = min_pop(head, 100);
+    /*
     aux1 = head;
     while(aux1 != NULL){
         ratiodea_select(aux1);
         aux1 = aux1->next;
     }
-
-    output(head);
+    */
+    _op(head);
     return 0;
 }
