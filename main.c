@@ -18,7 +18,7 @@ int main(int argc, char **argv)
     strcpy(what_to_read, argv[1]);
     head = read_input(what_to_read);
     
-    head = min_pop(head, 100);
+    head = max_pop(head, 100);
     /*
     aux1 = head;
     while(aux1 != NULL){
