@@ -16,9 +16,8 @@ int main(int argc, char **argv)
     int week = atoi(argv[3]);
     char what_to_read[20];
     strcpy(what_to_read, argv[1]);
-    head = read_input(what_to_read);
+    head = binary_input();
     
-    head = max_pop(head, 100);
     /*
     aux1 = head;
     while(aux1 != NULL){

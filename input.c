@@ -58,6 +58,7 @@ fix_t *read_input(char *what_to_read)
         while((token = strtok(NULL,",")) != NULL && i < 9){
             column[i++] = token;
         }
+
         if (strcmp(column[2], what_to_read) == 0 || strcmp(what_to_read, "all") == 0){
             strcpy(country, column[0]);
             strcpy(initials, column[1]);
@@ -134,4 +135,92 @@ void output(fix_t *head)
         head = aux1;
     }
     fclose(fp);
+}
+
+void binary_output(fix_t *head)
+{
+    FILE *fp = fopen("output.dat", "wb");
+    int i = 0;
+    var_t *aux1;
+    fix_t *aux2;
+    while(head != NULL){
+        fwrite(head->name, 30, 1, fp);
+        fwrite(head->initials, 4, 1, fp);
+        fwrite(head->continent, 10, 1, fp);
+        fwrite(&head->population, 8, 1, fp);
+        i = count_var(head->var);
+        fwrite(&i, 4, 1, fp);
+        for(int a = 0; a < i; a++){
+            fwrite(&head->var->year, 4, 1, fp);
+            fwrite(&head->var->week, 4, 1, fp);
+            fwrite(&head->var->weekly_cases, 4, 1, fp);
+            fwrite(&head->var->rate_cases, 8, 1, fp);
+            fwrite(&head->var->cumulative_cases, 4, 1, fp);
+            fwrite(&head->var->weekly_deaths, 4, 1, fp);
+            fwrite(&head->var->rate_deaths, 8, 1, fp);
+            fwrite(&head->var->cumulative_deaths, 4, 1, fp);
+            
+            aux1 = head->var->next;
+            free(head->var);
+            head->var = aux1;
+        }
+        aux2 = head->next;
+        free(head);
+        head = aux2;
+    }
+    fclose(fp);
+}
+
+fix_t *binary_input()
+{
+    FILE *fp = fopen("output.dat", "rb");
+    int i = 0;
+    char name[30];
+    char initials[4];
+    char continent[10];
+    unsigned long population;
+    int week;
+    int year;
+    int weekly_cases;
+    int weekly_deaths;
+    double rate_cases;
+    double rate_deaths;
+    int cumulative_cases;
+    int cumulative_deaths;
+    fix_t *head;
+    var_t *aux1;
+    fix_t *aux2;
+    while(fread(name, 30, 1, fp) != NULL){
+        fread(initials, 4, 1, fp);
+        fread(continent, 10, 1, fp);
+        fread(&population, 8, 1, fp);
+        aux2 = create_country(name, initials, continent, population);
+        head = insert_fix(aux2, head);
+        fread(&i, 4, 1, fp);
+        for(int a = 0; a < i; a++){
+            fread(&year, 4, 1, fp);
+            fread(&week, 4, 1, fp);
+            fread(&weekly_cases, 4, 1, fp);
+            fread(&rate_cases, 8, 1, fp);
+            fread(&cumulative_cases, 4, 1, fp);
+            fread(&weekly_deaths, 4, 1, fp);
+            fread(&rate_deaths, 8, 1, fp);
+            fread(&cumulative_deaths, 4, 1, fp);
+            aux1 = create_date(year, week, "cases", weekly_cases, rate_cases, cumulative_cases);
+            update_date(aux1, "deaths", weekly_deaths, rate_deaths, cumulative_deaths);
+            aux2->var = insert_var(aux1, aux2->var);
+        }
+    }
+    fclose(fp);
+    return head;
+}
+
+int count_var(var_t *head)
+{
+    int i = 0;
+    while(head != NULL){
+        i++;
+        head = head->next;
+    }
+    return i;
 }
