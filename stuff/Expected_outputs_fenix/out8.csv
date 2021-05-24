@@ -1,0 +1,11 @@
+country,country_code,continent,population,indicator,weekly_count,year_week,rate_14_day,cumulative_count
+Angola,AGO,Africa,32866268,deaths,26,2020-43,1.491000,267
+Australia,AUS,Oceania,25499881,deaths,142,2020-36,9.843000,753
+Austria,AUT,Europe,8901064,deaths,828,2020-49,172.227000,3732
+Brazil,BRA,America,212559409,deaths,21865,2021-14,191.716000,354617
+China,CHN,Asia,1439323774,deaths,1291,2020-16,0.904000,4636
+France,FRA,Europe,67320216,deaths,6315,2020-15,175.089000,14393
+Portugal,PRT,Europe,10295909,deaths,2036,2021-04,362.183000,12757
+South Africa,ZAF,Africa,59308690,deaths,3942,2021-02,126.929000,37105
+Thailand,THA,Asia,69799978,deaths,19,2020-14,0.358000,26
+United States Of America,USA,America,331002647,deaths,23518,2021-03,141.047000,421129

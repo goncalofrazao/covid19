@@ -4,7 +4,7 @@
 #include "structures.h"
 
 void inf_select(fix_t *country);
-var_t *put_in_head(var_t *aux1);
+var_t *put_in_head(var_t *aux1, var_t *head);
 void free_list(var_t *to_free);
 void dea_select(fix_t *country);
 void ratioinf_select(fix_t *country);

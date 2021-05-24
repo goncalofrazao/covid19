@@ -1,0 +1,5 @@
+country,country_code,continent,population,indicator,weekly_count,year_week,rate_14_day,cumulative_count
+Angola,AGO,Africa,32866268,cases,1779,2020-44,10.172000,10805
+Australia,AUS,Oceania,25499881,cases,3520,2020-31,24.004000,17923
+Portugal,PRT,Europe,10295909,cases,86610,2021-03,1493.991000,643113
+Austria,AUT,Europe,8901064,cases,50986,2020-46,1037.898000,203494

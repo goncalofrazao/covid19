@@ -5,11 +5,17 @@
 
 #define MAXLEN 1000
 
-fix_t *read_input();
-void _op(fix_t *head);
-void output(fix_t *head);
+fix_t *read_input(char *what_to_read, char *filename);
+void _op(fix_t *head, char *filename);
+void output(fix_t *head, char *filename);
 void binary_output(fix_t *head);
+//fix_t *binary_input();
 int count_var(var_t *head);
-fix_t *binary_input();
+void check_string(char *check);
+void check_int(char *check);
+void check_float(char *check);
+void check_line(char *line);
+void check_date(char *date);
+void read_error();
 
 #endif // INPUT_H_INCLUDED

@@ -1,0 +1,11 @@
+country,country_code,continent,population,indicator,weekly_count,year_week,rate_14_day,cumulative_count
+Angola,AGO,Africa,32866268,cases,1779,2020-44,10.172000,10805
+Australia,AUS,Oceania,25499881,cases,3520,2020-31,24.004000,17923
+Austria,AUT,Europe,8901064,cases,50986,2020-46,1037.898000,203494
+Brazil,BRA,America,212559409,cases,527917,2021-11,468.509000,12047526
+China,CHN,Asia,1439323774,cases,30412,2020-07,3.711000,70618
+France,FRA,Europe,67320216,cases,373409,2020-45,963.777000,1787324
+Portugal,PRT,Europe,10295909,cases,86610,2021-03,1493.991000,643113
+South Africa,ZAF,Africa,59308690,cases,130849,2021-01,370.479000,1231597
+Thailand,THA,Asia,69799978,cases,10132,2021-15,20.938000,43742
+United States Of America,USA,America,331002647,cases,1782792,2021-01,988.317000,22423006

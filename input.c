@@ -7,7 +7,7 @@
 #include "structures.h"
 #include "new_struct.h"
 
-fix_t *read_input(char *what_to_read)
+fix_t *read_input(char *what_to_read, char *filename)
 {
 
     FILE *fp;
@@ -33,15 +33,15 @@ fix_t *read_input(char *what_to_read)
     double rate_14_day;
     int cumulative_count;
 
-    if((fp = fopen ("covid19_w_t01.csv", "r"))==NULL)
+    if((fp = fopen (filename, "r"))==NULL)
     {
         printf("Erro na abertura do ficheiro");
         return NULL;
     }
     fscanf(fp, "%*[^\n]\n");
 
-
     while(fgets(str, MAXLEN, fp) != NULL){
+        check_line(str);
         stringlen = strlen(str);
         
         if(str[stringlen - 1] == '\n')
@@ -58,6 +58,45 @@ fix_t *read_input(char *what_to_read)
         while((token = strtok(NULL,",")) != NULL && i < 9){
             column[i++] = token;
         }
+        if(i < 8){
+            read_error();
+        }
+        /*
+        for(int j = 0; j < i; j++){
+            switch (j)
+            {
+            case 0:
+            case 1:
+            case 2:
+            case 4:
+                check_string(column[j]);
+                break;
+
+            case 3:
+            case 5:
+            case 8:
+                check_int(column[j]);
+                break;
+            
+            case 6:
+                check_date(column[j]);
+                break;
+
+            case 7:
+                if(i == 8){
+                    check_int(column[j]);
+                    printf("in\n");
+                }
+                else{
+                    check_float(column[j]);
+                }
+                break;
+
+            default:
+                break;
+            }
+        }
+        */
 
         if (strcmp(column[2], what_to_read) == 0 || strcmp(what_to_read, "all") == 0){
             strcpy(country, column[0]);
@@ -67,6 +106,9 @@ fix_t *read_input(char *what_to_read)
             strcpy(indicator, column[4]);
             weekly_count = atoi(column[5]);
             sscanf(column[6], "%d-%d", &year, &week);
+            if(week > 53)
+                read_error();
+
             if(i == 8){
                 cumulative_count = atoi(column[7]);
                 rate_14_day = 0;
@@ -99,11 +141,11 @@ fix_t *read_input(char *what_to_read)
     return head;
 }
 
-void _op(fix_t *head)
+void _op(fix_t *head, char *filename)
 {
     fix_t *aux1;
     var_t *aux2;
-    FILE *fp = fopen("output.csv", "w");
+    FILE *fp = fopen(filename, "w");
     while(head != NULL){
         fprintf(fp, "%s, %lu\n", head->name, head->population);
         while(head->var != NULL){
@@ -118,11 +160,11 @@ void _op(fix_t *head)
     fclose(fp);
 }
 
-void output(fix_t *head)
+void output(fix_t *head, char *filename)
 {
     fix_t *aux1;
     var_t *aux2;
-    FILE *fp = fopen("output.csv", "w");
+    FILE *fp = fopen(filename, "w");
     while(head != NULL){
         while(head->var != NULL){
             fprintf(fp, "%s, %d-%d, %d, %f, %d, %d, %f, %d\n", head->name, head->var->year, head->var->week, head->var->weekly_cases, head->var->rate_cases, head->var->cumulative_cases, head->var->weekly_deaths, head->var->rate_deaths, head->var->cumulative_deaths);
@@ -171,6 +213,7 @@ void binary_output(fix_t *head)
     fclose(fp);
 }
 
+/*
 fix_t *binary_input()
 {
     FILE *fp = fopen("output.dat", "rb");
@@ -214,6 +257,7 @@ fix_t *binary_input()
     fclose(fp);
     return head;
 }
+*/
 
 int count_var(var_t *head)
 {
@@ -223,4 +267,67 @@ int count_var(var_t *head)
         head = head->next;
     }
     return i;
+}
+
+void check_string(char *check)
+{
+    for(int i = 0; i < strlen(check); i++){
+        if(!((check[i] >= 'a' && check[i] <= 'z') || (check[i] >= 'A' && check[i] <= 'Z') || (check[i] == ' ')))
+            read_error();
+    }
+}
+
+void check_int(char *check)
+{
+    printf("strlen = %lu\n",strlen(check));
+    printf("string = %s\n", check);
+    for(int i = 0; i < strlen(check); i++){
+    
+        if(!(check[i] >= '0' && check[i] <= '9'))
+            read_error();
+    }
+}
+
+void check_float(char *check)
+{
+    int flag = 0;
+    for(int i = 0; i < strlen(check); i++){
+        if(!((check[i] >= '0' && check[i] <= '9') || (check[i] == '.')))
+            read_error();
+        if(check[i] == '.')
+            flag++;
+    }
+    if(flag > 1)
+        read_error();
+}
+
+void check_line(char *line)
+{
+    int comma_number = 0;
+    while((*line) != '\0'){
+        if((*line) == ',')
+            comma_number++;
+        line++;
+    }
+    if(comma_number < 8)
+        read_error();
+}
+
+void check_date(char *date)
+{
+    int ifen_number = 0;
+    for(int i = 0; i < strlen(date); i++){
+        if(date[i] == '-')
+            ifen_number++;
+        if((date[i] < '0' || date[i] > '9') && !(date[i] == '-'))
+            read_error();
+    }
+    if(ifen_number > 1)
+        read_error();
+}
+
+void read_error()
+{
+    printf("-1 READ ERROR\n");
+    exit(EXIT_FAILURE);
 }

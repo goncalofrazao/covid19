@@ -3,8 +3,11 @@
 
 #include "structures.h"
 
-void remove_struct(fix_t *aux);
+void remove_fix(fix_t *aux);
+void remove_var(var_t *to_remove);
 fix_t *min_pop(fix_t *head, int n);
 fix_t *max_pop(fix_t *head, int n);
+void restrict_week(fix_t *head, int week, int year);
+
 
 #endif

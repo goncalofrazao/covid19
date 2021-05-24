@@ -1,0 +1,26 @@
+./covid19 -i covid19_w_tf01.csv -L all -o out1.csv
+./covid19 -i covid19_w_tf01.csv -L Asia -o out2.csv
+./covid19 -i covid19_w_tf01.csv -L Europe -o out3.csv
+./covid19 -i covid19_w_tf01.csv -L Oceania -o out4.csv
+./covid19 -i covid19_w_tf01.csv -L Africa -o out5.csv
+./covid19 -i covid19_w_tf01.csv -L America -o out6.csv
+
+./covid19 -i covid19_w_tf01.csv -L all -D inf -o out7.csv
+./covid19 -i covid19_w_tf01.csv -L all -D dea -o out8.csv
+./covid19 -i covid19_w_tf01.csv -L all -D racioinf -o out9.csv
+./covid19 -i covid19_w_tf01.csv -L all -D raciodea -o out10.csv
+
+./covid19 -i covid19_w_tf01.csv -L all -P min 50000 -o out11.csv
+./covid19 -i covid19_w_tf01.csv -L all -P max 50000 -o out12.csv
+./covid19 -i covid19_w_tf01.csv -L all -P date 2021-14 -o out13.csv
+./covid19 -i covid19_w_tf01.csv -L all -P dates 2021-14 2021-15 -o out14.csv
+
+./covid19 -i covid19_w_tf01.csv -L  all -S alfa -o out15.csv
+./covid19 -i covid19_w_tf01.csv -L  all -S pop -o out16.csv
+./covid19 -i covid19_w_tf01.csv -L  all -S inf 2021-14 -o out17.csv
+./covid19 -i covid19_w_tf01.csv -L  all -S dea 2021-14 -o out18.csv
+
+./covid19 -i covid19_w_tf01.csv -L all -D inf -P max 50000 -S pop -o out19.csv
+./covid19 -i covid19_w_tf01.csv -L all -P max 50000 -S alfa -o out20.csv
+./covid19 -i covid19_w_tf01.csv -L all -P min 50000 -S inf 2021-14 -o out21.csv
+./covid19 -i covid19_w_tf01.csv -L all -P dates 2021-14 2021-15 -S dea 2021-14 -o out22.csv

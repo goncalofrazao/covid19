@@ -23,9 +23,8 @@ void inf_select(fix_t *country)
 {
     var_t list_head;
     list_head.next = country->var;
-    var_t *aux1 = country->var;
     var_t *saver = &list_head;
-    //printf("getting in\n");
+    var_t *aux1 = saver->next;
     // find the week with most cases
     if(aux1->next != NULL){
         while(aux1->next != NULL){
@@ -35,7 +34,7 @@ void inf_select(fix_t *country)
             aux1 = aux1->next;
         }
         // put the week with most cases in head of the list of dates
-        country->var = put_in_head(saver);
+        country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
         country->var->next = NULL;
@@ -48,19 +47,20 @@ void inf_select(fix_t *country)
  * Arguments: var_t *aux1 -- pointer to the element of the list before
  *                           the week to put in head
  * 
- * Return: aux2 -- the pointer to the week with most cases
+ * Return: aux2 -- the pointer to the new head
  * 
- * Description: This function removes the week with most cases from the
- *              list.
+ * Description: This function removes the next struct of input and puts
+ *              it in head
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-var_t *put_in_head(var_t *aux1)
+var_t *put_in_head(var_t *to_put, var_t *head)
 {
-    var_t *aux2 = aux1->next;
+    var_t *aux1 = to_put->next;
     // remove element of the list
-    aux1->next = aux1->next->next;
-    return aux2;
+    to_put->next = to_put->next->next;
+    //aux1->next = head;
+    return aux1;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -77,6 +77,7 @@ var_t *put_in_head(var_t *aux1)
 
 void free_list(var_t *to_free)
 {
+
     var_t *aux1;
     while(to_free != NULL){
         aux1 = to_free->next;
@@ -86,7 +87,7 @@ void free_list(var_t *to_free)
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Funtion name: dea    _select
+ * Funtion name: dea_select
  * 
  * Arguments: fix_t *country -- pointer to the country to select the
  *                              week with most deaths.
@@ -105,7 +106,6 @@ void dea_select(fix_t *country)
     list_head.next = country->var;
     var_t *aux1 = country->var;
     var_t *saver = &list_head;
-    //printf("getting in\n");
     // find the week with most cases
     if(aux1->next != NULL){
         while(aux1->next != NULL){
@@ -115,7 +115,7 @@ void dea_select(fix_t *country)
             aux1 = aux1->next;
         }
         // put the week with most cases in head of the list of dates
-        country->var = put_in_head(saver);
+        country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
         country->var->next = NULL;
@@ -142,7 +142,6 @@ void ratioinf_select(fix_t *country)
     list_head.next = country->var;
     var_t *aux1 = country->var;
     var_t *saver = &list_head;
-    //printf("getting in\n");
     // find the week with most cases
     if(aux1->next != NULL){
         while(aux1->next != NULL){
@@ -152,7 +151,7 @@ void ratioinf_select(fix_t *country)
             aux1 = aux1->next;
         }
         // put the week with most cases in head of the list of dates
-        country->var = put_in_head(saver);
+        country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
         country->var->next = NULL;
@@ -179,7 +178,6 @@ void ratiodea_select(fix_t *country)
     list_head.next = country->var;
     var_t *aux1 = country->var;
     var_t *saver = &list_head;
-    //printf("getting in\n");
     // find the week with most cases
     if(aux1->next != NULL){
         while(aux1->next != NULL){
@@ -189,7 +187,7 @@ void ratiodea_select(fix_t *country)
             aux1 = aux1->next;
         }
         // put the week with most cases in head of the list of dates
-        country->var = put_in_head(saver);
+        country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
         country->var->next = NULL;
