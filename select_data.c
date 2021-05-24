@@ -21,21 +21,22 @@
 
 void inf_select(fix_t *country)
 {
+    // create auxiliar struct
     var_t list_head;
     list_head.next = country->var;
     var_t *saver = &list_head;
     var_t *aux1 = saver->next;
-    // find the week with most cases
+    // just put in head if list has more than 1 struct
     if(aux1->next != NULL){
+        // find the week with most cases
         while(aux1->next != NULL){
+            // if it finds one struct with more cases, saves it in saver
             if(aux1->next->weekly_cases > saver->next->weekly_cases){
                 saver = aux1;
             }
             aux1 = aux1->next;
         }
-        //printf("%d-%d\n", saver->next->year, saver->next->week);
         // put the week with most cases in head of the list of dates
-        //print_secondary(country->var);
         country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
@@ -58,12 +59,16 @@ void inf_select(fix_t *country)
 
 var_t *put_in_head(var_t *to_put, var_t *head)
 {
+    // save struct to put in head
     var_t *aux1 = to_put->next;
+    // if struct to put in head is not the struct that is already in the head
     if (aux1 != head){
-        // remove element of the list
+        // remove element of the middle of the list
         to_put->next = to_put->next->next;
+        // struct to put in the head points to the old head
         aux1->next = head;
     }
+    // return the new head of list
     return aux1;
 }
 
@@ -81,21 +86,15 @@ var_t *put_in_head(var_t *to_put, var_t *head)
 
 void free_list(var_t *to_free)
 {
-
     var_t *aux1;
+    // loop all list
     while(to_free != NULL){
+        // save next struct to free
         aux1 = to_free->next;
+        // free struct
         free(to_free);
-        printf("%d-%d --- %d-%d\n", to_free->year, to_free->week, to_free->next->year, to_free->next->week);
+        // set next struct to free
         to_free = aux1;
-    }
-}
-
-void print_secondary(var_t *head)
-{
-    while(head != NULL){
-        printf("%d-%d\n", head->year, head->week);
-        head = head->next;
     }
 }
 
@@ -115,13 +114,16 @@ void print_secondary(var_t *head)
 
 void dea_select(fix_t *country)
 {
+    // create auxiliar struct
     var_t list_head;
     list_head.next = country->var;
     var_t *aux1 = country->var;
     var_t *saver = &list_head;
-    // find the week with most cases
+    // just put in head if list has more than 1 struct
     if(aux1->next != NULL){
+        // find the week with most deaths
         while(aux1->next != NULL){
+            // if it finds one struct with more deaths, saves it in saver
             if(aux1->next->weekly_deaths > saver->next->weekly_deaths){
                 saver = aux1;
             }
@@ -151,13 +153,15 @@ void dea_select(fix_t *country)
 
 void ratioinf_select(fix_t *country)
 {
+    // create auxiliar struct
     var_t list_head;
     list_head.next = country->var;
     var_t *aux1 = country->var;
     var_t *saver = &list_head;
-    // find the week with most cases
     if(aux1->next != NULL){
+        // find the week with most ratio of cases
         while(aux1->next != NULL){
+            // if it finds one struct with more ratio of cases, saves it in saver
             if(aux1->next->rate_cases > saver->next->rate_cases){
                 saver = aux1;
             }
@@ -187,13 +191,15 @@ void ratioinf_select(fix_t *country)
 
 void ratiodea_select(fix_t *country)
 {
+    // create auxiliar struct
     var_t list_head;
     list_head.next = country->var;
     var_t *aux1 = country->var;
     var_t *saver = &list_head;
-    // find the week with most cases
     if(aux1->next != NULL){
+        // find the week with most ratio of deaths
         while(aux1->next != NULL){
+            // if it finds one struct with more ratio of deaths, saves it in saver
             if(aux1->next->rate_deaths > saver->next->rate_deaths){
                 saver = aux1;
             }
