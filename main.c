@@ -22,7 +22,11 @@ int main(int argc, char **argv)
     strcpy(filename_output, argv[3]);
     strcpy(what_to_read, argv[1]);
     head = read_input(what_to_read, filename_input);
-    
+    fix_t *aux = head;
+    while(aux != NULL){
+        inf_select(aux);
+        aux = aux->next;
+    }
     output(head, filename_output);
     return 0;
 }
