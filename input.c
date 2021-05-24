@@ -7,6 +7,20 @@
 #include "structures.h"
 #include "new_struct.h"
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: read_input
+ *
+ * Arguments: char *what_to_read -- what we want to read from the
+ *                                  input file
+ *            char *filename -- name of the file
+ *
+ * Return: fix_t *head -- pointer to the head of list of countries
+ *
+ *
+ * Description: This function reads the input file
+ *
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 fix_t *read_input(char *what_to_read, char *filename)
 {
 
@@ -159,6 +173,20 @@ void _op(fix_t *head, char *filename)
     fclose(fp);
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: output
+ *
+ * Arguments: fix_t *head -- pointer to the head of list of countries
+ *            char *filename -- name of the file to write
+ *
+ * Return: no return
+ *
+ *
+ * Description: This function creates a .csv file with the data
+ *              from the structures
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 void output(fix_t *head, char *filename)
 {
     fix_t *aux1;
@@ -178,6 +206,20 @@ void output(fix_t *head, char *filename)
     }
     fclose(fp);
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: binary_output
+ *
+ * Arguments: fix_t *head -- pointer to the head of list of countries
+ *            char *filename -- name of the file to write
+ *
+ * Return: no return
+ *
+ *
+ * Description: This function creates a .dat binary file with the data
+ *              from the structures
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void binary_output(fix_t *head, char *filename)
 {
@@ -202,6 +244,20 @@ void binary_output(fix_t *head, char *filename)
     }
     fclose(fp);
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: binary_input
+ *
+ * Arguments: char *filename -- name of the file
+ *
+ *
+ * Return: fix_t *head -- pointer to the head of list of countries
+ *
+ *
+ * Description: This function reads the .dat input file
+ *
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 fix_t *binary_input(char *filename)
 {
@@ -230,6 +286,20 @@ fix_t *binary_input(char *filename)
     return head;
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: count_var
+ *
+ * Arguments: var_t *head -- pointer to the head of list of countries
+ *
+ *
+ * Return: int i -- number of var_t type structures
+ *
+ *
+ * Description: This function counts the number of var_t type structures
+ *
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 int count_var(var_t *head)
 {
     int i = 0;
@@ -239,7 +309,19 @@ int count_var(var_t *head)
     }
     return i;
 }
-
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: count_fix
+ *
+ * Arguments: var_t *head -- pointer to the head of list of countries
+ *
+ *
+ * Return: int i -- number of fix_t type structures
+ *
+ *
+ * Description: This function counts the number of var_t type structures
+ *
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 int count_fix(fix_t *head)
 {
     int i = 0;
@@ -249,7 +331,19 @@ int count_fix(fix_t *head)
     }
     return i;
 }
-
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: check_string
+ *
+ * Arguments: char *check -- string to check
+ *
+ *
+ * Return: no return
+ *
+ *
+ * Description: Checks if string only has characters from a to z, A to Z
+ *              or space. If it doesn't, it ends the program
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void check_string(char *check)
 {
     for(int i = 0; i < strlen(check); i++){
@@ -257,6 +351,20 @@ void check_string(char *check)
             read_error();
     }
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: check_int
+ *
+ * Arguments: char *check -- string to check
+ *
+ *
+ * Return: no return
+ *
+ *
+ * Description: Checks if string only has numbers
+ *              If it doesn't, it ends the program
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void check_int(char *check)
 {
@@ -266,7 +374,19 @@ void check_int(char *check)
             read_error();
     }
 }
-
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: check_float
+ *
+ * Arguments: char *check -- string to check
+ *
+ *
+ * Return: no return
+ *
+ *
+ * Description: Checks if string only has numbers and one '.'
+ *              If it doesn't, it ends the program
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void check_float(char *check)
 {
     int flag = 0;
@@ -280,6 +400,20 @@ void check_float(char *check)
         read_error();
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: check_line
+ *
+ * Arguments: char *check -- string to check
+ *
+ *
+ * Return: no return
+ *
+ *
+ * Description: Counts the number of commas in the string
+ *              If the number is less than 8, it ends the program
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 void check_line(char *line)
 {
     int comma_number = 0;
@@ -291,6 +425,20 @@ void check_line(char *line)
     if(comma_number < 8)
         read_error();
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: check_date
+ *
+ * Arguments: char *date -- string to check
+ *
+ *
+ * Return: no return
+ *
+ *
+ * Description: Check if string only has number and one '-'
+ *              If it doesn't, it ends the program
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void check_date(char *date)
 {
@@ -304,6 +452,19 @@ void check_date(char *date)
     if(ifen_number > 1)
         read_error();
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: read_error
+ *
+ * Arguments: no arguments
+ *
+ *
+ * Return: no return
+ *
+ *
+ * Description: Prints error message and ends program
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void read_error()
 {
