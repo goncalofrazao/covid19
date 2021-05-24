@@ -43,15 +43,15 @@ fix_t *read_input(char *what_to_read, char *filename)
     while(fgets(str, MAXLEN, fp) != NULL){
         check_line(str);
         stringlen = strlen(str);
-        
+
         if(str[stringlen - 1] == '\n')
-            str[stringlen - 1] = '\0';
+            str[stringlen - 2] = '\0';
 
         if ((str[stringlen - 2] == '\n' && str[stringlen - 1] == '\r')){
             str[stringlen - 2] = '\0';
             str[stringlen - 1] = '\0';
         }
-        
+
         token = strtok(str, ",");
         column[0] = token;
         i = 1;
@@ -61,7 +61,7 @@ fix_t *read_input(char *what_to_read, char *filename)
         if(i < 8){
             read_error();
         }
-        
+
         for(int j = 0; j < i; j++){
             switch (j)
             {
@@ -77,7 +77,7 @@ fix_t *read_input(char *what_to_read, char *filename)
             case 8:
                 check_int(column[j]);
                 break;
-            
+
             case 6:
                 check_date(column[j]);
                 break;
@@ -96,7 +96,7 @@ fix_t *read_input(char *what_to_read, char *filename)
                 break;
             }
         }
-        
+
 
         if (strcmp(column[2], what_to_read) == 0 || strcmp(what_to_read, "all") == 0){
             strcpy(country, column[0]);
@@ -186,22 +186,11 @@ void binary_output(fix_t *head)
     var_t *aux1;
     fix_t *aux2;
     while(head != NULL){
-        fwrite(head->name, 30, 1, fp);
-        fwrite(head->initials, 4, 1, fp);
-        fwrite(head->continent, 10, 1, fp);
-        fwrite(&head->population, 8, 1, fp);
+        fwrite(head,sizeof(fix_t),1,fp);
         i = count_var(head->var);
         fwrite(&i, 4, 1, fp);
         for(int a = 0; a < i; a++){
-            fwrite(&head->var->year, 4, 1, fp);
-            fwrite(&head->var->week, 4, 1, fp);
-            fwrite(&head->var->weekly_cases, 4, 1, fp);
-            fwrite(&head->var->rate_cases, 8, 1, fp);
-            fwrite(&head->var->cumulative_cases, 4, 1, fp);
-            fwrite(&head->var->weekly_deaths, 4, 1, fp);
-            fwrite(&head->var->rate_deaths, 8, 1, fp);
-            fwrite(&head->var->cumulative_deaths, 4, 1, fp);
-            
+            fwrite(head->var,sizeof(var_t),1,fp);
             aux1 = head->var->next;
             free(head->var);
             head->var = aux1;
@@ -213,7 +202,7 @@ void binary_output(fix_t *head)
     fclose(fp);
 }
 
-/*
+
 fix_t *binary_input()
 {
     FILE *fp = fopen("output.dat", "rb");
@@ -233,22 +222,24 @@ fix_t *binary_input()
     fix_t *head;
     var_t *aux1;
     fix_t *aux2;
-    while(fread(name, 30, 1, fp) != NULL){
-        fread(initials, 4, 1, fp);
-        fread(continent, 10, 1, fp);
-        fread(&population, 8, 1, fp);
+    while( fread(head,sizeof(fix_t),1,fp)!= EOF){
+        name=head->name;
+        initials=head->initials;
+        continent=head->continent;
+        population=head->population;
         aux2 = create_country(name, initials, continent, population);
         head = insert_fix(aux2, head);
         fread(&i, 4, 1, fp);
         for(int a = 0; a < i; a++){
-            fread(&year, 4, 1, fp);
-            fread(&week, 4, 1, fp);
-            fread(&weekly_cases, 4, 1, fp);
-            fread(&rate_cases, 8, 1, fp);
-            fread(&cumulative_cases, 4, 1, fp);
-            fread(&weekly_deaths, 4, 1, fp);
-            fread(&rate_deaths, 8, 1, fp);
-            fread(&cumulative_deaths, 4, 1, fp);
+            fread(head->var,sizeof(var_t),1,fp);
+            year=head->var->year;
+            week=head->var->week;
+            weekly_cases=head->var->weekly_cases;
+            rate_cases=head->var->rate_cases;
+            cumulative_cases=head->var->cumulative_cases;
+            weekly_deaths=head->var->weekly_deaths;
+            rate_deaths=head->var->rate_deaths;
+            cumulative_deaths=head->var->cumulative_deaths;
             aux1 = create_date(year, week, "cases", weekly_cases, rate_cases, cumulative_cases);
             update_date(aux1, "deaths", weekly_deaths, rate_deaths, cumulative_deaths);
             aux2->var = insert_var(aux1, aux2->var);
@@ -257,7 +248,7 @@ fix_t *binary_input()
     fclose(fp);
     return head;
 }
-*/
+
 
 int count_var(var_t *head)
 {
@@ -282,7 +273,7 @@ void check_int(char *check)
     printf("strlen = %lu\n",strlen(check));
     printf("string = %s\n", check);
     for(int i = 0; i < strlen(check); i++){
-    
+
         if(!(check[i] >= '0' && check[i] <= '9'))
             read_error();
     }
