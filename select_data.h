@@ -3,6 +3,8 @@
 
 #include "structures.h"
 
+void print_secondary(var_t *head);
+
 void inf_select(fix_t *country);
 var_t *put_in_head(var_t *aux1, var_t *head);
 void free_list(var_t *to_free);

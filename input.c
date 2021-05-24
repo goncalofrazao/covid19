@@ -61,7 +61,7 @@ fix_t *read_input(char *what_to_read, char *filename)
         if(i < 8){
             read_error();
         }
-        /*
+        
         for(int j = 0; j < i; j++){
             switch (j)
             {
@@ -96,7 +96,7 @@ fix_t *read_input(char *what_to_read, char *filename)
                 break;
             }
         }
-        */
+        
 
         if (strcmp(column[2], what_to_read) == 0 || strcmp(what_to_read, "all") == 0){
             strcpy(country, column[0]);

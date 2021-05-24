@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 {
     fix_t *head;
     fix_t *aux1;
-    int n;
+    int n = 1;
     int year;
     int week;
     char what_to_read[20];
@@ -22,13 +22,13 @@ int main(int argc, char **argv)
     strcpy(filename_output, argv[3]);
     strcpy(what_to_read, argv[1]);
     head = read_input(what_to_read, filename_input);
-    n = 100;
+    /*
     aux1 = head;
     while(aux1 !=NULL){
         inf_select(aux1);
         aux1 = aux1->next;
     }
-    head = pop_order(head);
+    */
     output(head, filename_output);
     return 0;
 }

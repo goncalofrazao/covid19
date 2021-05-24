@@ -33,7 +33,9 @@ void inf_select(fix_t *country)
             }
             aux1 = aux1->next;
         }
+        //printf("%d-%d\n", saver->next->year, saver->next->week);
         // put the week with most cases in head of the list of dates
+        //print_secondary(country->var);
         country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
@@ -57,9 +59,11 @@ void inf_select(fix_t *country)
 var_t *put_in_head(var_t *to_put, var_t *head)
 {
     var_t *aux1 = to_put->next;
-    // remove element of the list
-    to_put->next = to_put->next->next;
-    //aux1->next = head;
+    if (aux1 != head){
+        // remove element of the list
+        to_put->next = to_put->next->next;
+        aux1->next = head;
+    }
     return aux1;
 }
 
@@ -82,7 +86,16 @@ void free_list(var_t *to_free)
     while(to_free != NULL){
         aux1 = to_free->next;
         free(to_free);
+        printf("%d-%d --- %d-%d\n", to_free->year, to_free->week, to_free->next->year, to_free->next->week);
         to_free = aux1;
+    }
+}
+
+void print_secondary(var_t *head)
+{
+    while(head != NULL){
+        printf("%d-%d\n", head->year, head->week);
+        head = head->next;
     }
 }
 
