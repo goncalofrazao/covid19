@@ -85,7 +85,6 @@ fix_t *read_input(char *what_to_read, char *filename)
             case 7:
                 if(i == 8){
                     check_int(column[j]);
-                    printf("in\n");
                 }
                 else{
                     check_float(column[j]);
@@ -165,6 +164,7 @@ void output(fix_t *head, char *filename)
     fix_t *aux1;
     var_t *aux2;
     FILE *fp = fopen(filename, "w");
+    fprintf(fp, "country,country_code,continent,population,indicator,weekly_count,year_week,rate_14_day,cumulative_count\n");
     while(head != NULL){
         while(head->var != NULL){
             fprintf(fp, "%s, %d-%d, %d, %f, %d, %d, %f, %d\n", head->name, head->var->year, head->var->week, head->var->weekly_cases, head->var->rate_cases, head->var->cumulative_cases, head->var->weekly_deaths, head->var->rate_deaths, head->var->cumulative_deaths);
@@ -179,18 +179,19 @@ void output(fix_t *head, char *filename)
     fclose(fp);
 }
 
-void binary_output(fix_t *head)
+void binary_output(fix_t *head, char *filename)
 {
-    FILE *fp = fopen("output.dat", "wb");
-    int i = 0;
+    FILE *fp = fopen(filename, "wb");
+    int i = count_fix(head);
     var_t *aux1;
     fix_t *aux2;
+    fwrite(&i, sizeof(int), 1, fp);
     while(head != NULL){
-        fwrite(head,sizeof(fix_t),1,fp);
+        fwrite(head, sizeof(fix_t), 1, fp);
         i = count_var(head->var);
-        fwrite(&i, 4, 1, fp);
+        fwrite(&i, sizeof(int), 1, fp);
         for(int a = 0; a < i; a++){
-            fwrite(head->var,sizeof(var_t),1,fp);
+            fwrite(head->var, sizeof(var_t), 1, fp);
             aux1 = head->var->next;
             free(head->var);
             head->var = aux1;
@@ -202,46 +203,26 @@ void binary_output(fix_t *head)
     fclose(fp);
 }
 
-
-fix_t *binary_input()
+fix_t *binary_input(char *filename)
 {
-    FILE *fp = fopen("output.dat", "rb");
+    FILE *fp = fopen(filename, "rb");
     int i = 0;
-    char name[30];
-    char initials[4];
-    char continent[10];
-    unsigned long population;
-    int week;
-    int year;
-    int weekly_cases;
-    int weekly_deaths;
-    double rate_cases;
-    double rate_deaths;
-    int cumulative_cases;
-    int cumulative_deaths;
+    int j = 0;
     fix_t *head;
     var_t *aux1;
     fix_t *aux2;
-    while( fread(head,sizeof(fix_t),1,fp)!= EOF){
-        name=head->name;
-        initials=head->initials;
-        continent=head->continent;
-        population=head->population;
-        aux2 = create_country(name, initials, continent, population);
+    fread(&i, sizeof(int), 1, fp);
+    for(int b = 0; b < i; b++){
+        aux2 = (fix_t*) malloc(sizeof(fix_t));
+        fread(aux2, sizeof(fix_t), 1, fp);
+        aux2->next = NULL;
+        aux2->var = NULL;
         head = insert_fix(aux2, head);
-        fread(&i, 4, 1, fp);
-        for(int a = 0; a < i; a++){
-            fread(head->var,sizeof(var_t),1,fp);
-            year=head->var->year;
-            week=head->var->week;
-            weekly_cases=head->var->weekly_cases;
-            rate_cases=head->var->rate_cases;
-            cumulative_cases=head->var->cumulative_cases;
-            weekly_deaths=head->var->weekly_deaths;
-            rate_deaths=head->var->rate_deaths;
-            cumulative_deaths=head->var->cumulative_deaths;
-            aux1 = create_date(year, week, "cases", weekly_cases, rate_cases, cumulative_cases);
-            update_date(aux1, "deaths", weekly_deaths, rate_deaths, cumulative_deaths);
+        fread(&j, sizeof(int), 1, fp);
+        for(int a = 0; a < j; a++){
+            aux1 = (var_t*) malloc(sizeof(var_t));
+            fread(aux1, sizeof(var_t), 1, fp);
+            aux1->next = NULL;
             aux2->var = insert_var(aux1, aux2->var);
         }
     }
@@ -249,8 +230,17 @@ fix_t *binary_input()
     return head;
 }
 
-
 int count_var(var_t *head)
+{
+    int i = 0;
+    while(head != NULL){
+        i++;
+        head = head->next;
+    }
+    return i;
+}
+
+int count_fix(fix_t *head)
 {
     int i = 0;
     while(head != NULL){
@@ -270,8 +260,6 @@ void check_string(char *check)
 
 void check_int(char *check)
 {
-    printf("strlen = %lu\n",strlen(check));
-    printf("string = %s\n", check);
     for(int i = 0; i < strlen(check); i++){
 
         if(!(check[i] >= '0' && check[i] <= '9'))
