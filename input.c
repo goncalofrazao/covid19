@@ -21,9 +21,9 @@
  *
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 fix_t *read_input(char *what_to_read, char *filename)
 {
-
     FILE *fp;
 
     char *token;
@@ -195,7 +195,8 @@ void output(fix_t *head, char *filename)
     fprintf(fp, "country,country_code,continent,population,indicator,weekly_count,year_week,rate_14_day,cumulative_count\n");
     while(head != NULL){
         while(head->var != NULL){
-            fprintf(fp, "%s, %d-%d, %d, %f, %d, %d, %f, %d\n", head->name, head->var->year, head->var->week, head->var->weekly_cases, head->var->rate_cases, head->var->cumulative_cases, head->var->weekly_deaths, head->var->rate_deaths, head->var->cumulative_deaths);
+            fprintf(fp, "%s, %s, %s, %lu, cases, %d, %d-%d, %f, %d\n", head->name, head->initials, head->continent, head->population, head->var->weekly_cases, head->var->year, head->var->week, head->var->rate_cases, head->var->cumulative_cases);
+            fprintf(fp, "%s, %s, %s, %lu, deaths, %d, %d-%d, %f, %d\n", head->name, head->initials, head->continent, head->population, head->var->weekly_deaths, head->var->year, head->var->week, head->var->rate_deaths, head->var->cumulative_deaths);
             aux2 = head->var->next;
             free(head->var);
             head->var = aux2;
@@ -310,6 +311,7 @@ int count_var(var_t *head)
     }
     return i;
 }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Function name: count_fix
  *
@@ -323,6 +325,7 @@ int count_var(var_t *head)
  *
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 int count_fix(fix_t *head)
 {
     int i = 0;
@@ -332,6 +335,7 @@ int count_fix(fix_t *head)
     }
     return i;
 }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Function name: check_string
  *
@@ -345,6 +349,7 @@ int count_fix(fix_t *head)
  *              or space. If it doesn't, it ends the program
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 void check_string(char *check)
 {
     for(int i = 0; i < strlen(check); i++){
@@ -375,6 +380,7 @@ void check_int(char *check)
             read_error();
     }
 }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Function name: check_float
  *
@@ -388,6 +394,7 @@ void check_int(char *check)
  *              If it doesn't, it ends the program
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 void check_float(char *check)
 {
     int flag = 0;

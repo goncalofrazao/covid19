@@ -21,16 +21,20 @@ int main(int argc, char **argv)
     char filename_output[20];
     strcpy(filename_output, argv[3]);
     strcpy(what_to_read, argv[1]);
-    //head = read_input(what_to_read, filename_input);
-    head = binary_input(filename_input);
-    fix_t *aux = head;
+    printf("go input\n");
+    head = read_input(what_to_read, filename_input);
+    //head = binary_input(filename_input);
+    printf("read input\n");
+    restrict_weeks(head, 1, 2020, 20, 2020);
     /*
     while(aux != NULL){
         ratiodea_select(aux);
         aux = aux->next;
     }
     */
+    printf("go output\n");
     output(head, filename_output);
     //binary_output(head, filename_output);
+    printf("generate output\n");
     return 0;
 }
