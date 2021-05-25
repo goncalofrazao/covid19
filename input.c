@@ -264,7 +264,7 @@ fix_t *binary_input(char *filename)
     FILE *fp = fopen(filename, "rb");
     int i = 0;
     int j = 0;
-    fix_t *head;
+    fix_t *head = NULL;
     var_t *aux1;
     fix_t *aux2;
     fread(&i, sizeof(int), 1, fp);
@@ -322,6 +322,7 @@ int count_var(var_t *head)
  *
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 int count_fix(fix_t *head)
 {
     int i = 0;
@@ -331,6 +332,7 @@ int count_fix(fix_t *head)
     }
     return i;
 }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Function name: check_string
  *
@@ -344,6 +346,7 @@ int count_fix(fix_t *head)
  *              or space. If it doesn't, it ends the program
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 void check_string(char *check)
 {
     for(int i = 0; i < strlen(check); i++){
@@ -374,6 +377,7 @@ void check_int(char *check)
             read_error();
     }
 }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Function name: check_float
  *
@@ -387,6 +391,7 @@ void check_int(char *check)
  *              If it doesn't, it ends the program
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 void check_float(char *check)
 {
     int flag = 0;

@@ -21,11 +21,9 @@
 
 void inf_select(fix_t *country)
 {
+    var_t *aux1 = country->var;
     // create auxiliar struct
-    var_t list_head;
-    list_head.next = country->var;
-    var_t *saver = &list_head;
-    var_t *aux1 = saver->next;
+    var_t *saver = init_auxiliar_struct(country->var);
     // just put in head if list has more than 1 struct
     if(aux1->next != NULL){
         // find the week with most cases
@@ -114,11 +112,9 @@ void free_list(var_t *to_free)
 
 void dea_select(fix_t *country)
 {
-    // create auxiliar struct
-    var_t list_head;
-    list_head.next = country->var;
     var_t *aux1 = country->var;
-    var_t *saver = &list_head;
+    // create auxiliar struct
+    var_t *saver = init_auxiliar_struct(country->var);
     // just put in head if list has more than 1 struct
     if(aux1->next != NULL){
         // find the week with most deaths
@@ -153,11 +149,9 @@ void dea_select(fix_t *country)
 
 void ratioinf_select(fix_t *country)
 {
-    // create auxiliar struct
-    var_t list_head;
-    list_head.next = country->var;
     var_t *aux1 = country->var;
-    var_t *saver = &list_head;
+    // create auxiliar struct
+    var_t *saver = init_auxiliar_struct(country->var);
     if(aux1->next != NULL){
         // find the week with most ratio of cases
         while(aux1->next != NULL){
@@ -191,11 +185,9 @@ void ratioinf_select(fix_t *country)
 
 void ratiodea_select(fix_t *country)
 {
-    // create auxiliar struct
-    var_t list_head;
-    list_head.next = country->var;
     var_t *aux1 = country->var;
-    var_t *saver = &list_head;
+    // create auxiliar struct
+    var_t *saver = init_auxiliar_struct(country->var);
     if(aux1->next != NULL){
         // find the week with most ratio of deaths
         while(aux1->next != NULL){
@@ -211,4 +203,24 @@ void ratiodea_select(fix_t *country)
         free_list(country->var->next);
         country->var->next = NULL;
     }
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Funtion name: init_auxiliar_struct
+ * 
+ * Arguments: var_t *head -- pointer to the head of the list where it is
+ *                           supposed to create an auxiliar struct
+ * 
+ * Return: &aux_struct -- pointer to the new auxiliar struct
+ * 
+ * Description: This funtion creates an auxiliar struct and puts it 
+ *              pointing to the head of the list.
+ * 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+var_t *init_auxiliar_struct(var_t *head)
+{
+    static var_t aux_struct;
+    aux_struct.next = head;
+    return &aux_struct;
 }

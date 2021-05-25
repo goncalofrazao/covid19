@@ -21,12 +21,9 @@ int main(int argc, char **argv)
     char filename_output[20];
     strcpy(filename_output, argv[3]);
     strcpy(what_to_read, argv[1]);
-    head = read_input(what_to_read, filename_input);
-    fix_t *aux = head;
-    while(aux != NULL){
-        ratiodea_select(aux);
-        aux = aux->next;
-    }
+    head = binary_input(filename_input);
+    //restrict_weeks(head, 10, 2020, 15, 2020);
+
     output(head, filename_output);
     return 0;
 }

@@ -129,27 +129,64 @@ fix_t *max_pop(fix_t *head, int n)
 
 void restrict_week(fix_t *head, int week, int year)
 {
-    // create an auxiliar struct to the top of the list
-    var_t list_head;
-    var_t *aux1 = &list_head;
-    var_t *saver;
-    // loop all countries
-    while(head != NULL){
-        // next of auxiliar struct points to head of variable data
-        list_head.next = head->var;
-        // find the week
+    var_t *aux1 = head->var;
+    // create auxiliar struct
+    var_t *saver = init_auxiliar_struct(head->var);
+    // just put in head if list has more than 1 struct
+    if(aux1->next != NULL){
+        // find the week with most cases
         while(aux1->next != NULL){
+            // if it finds one struct with more cases, saves it in saver
             if(aux1->next->week == week && aux1->next->year == year){
                 saver = aux1;
                 break;
             }
             aux1 = aux1->next;
         }
-        // put the week in the head
+        // put the week with most cases in head of the list of dates
         head->var = put_in_head(saver, head->var);
         // free all other dates
         free_list(head->var->next);
         head->var->next = NULL;
-        head = head->next;
+    }
+}
+
+void restrict_weeks(fix_t *head, int min_week, int min_year, int max_week, int max_year)
+{
+    // create auxiliar struct
+    var_t *aux1 = init_auxiliar_struct(head->var);
+    var_t *save = aux1;
+    while(aux1->next != NULL){
+        if(check_week(aux1->next->year, aux1->next->week, min_week, min_year, max_week, max_year) == -1)
+            remove_var(aux1);
+        else
+            aux1 = aux1->next;
+        
+    }
+    head->var = save;
+}
+
+int check_week(int year, int week, int min_week, int min_year, int max_week, int max_year)
+{
+    if(year < min_year || year > max_year){
+        return -1;
+    }
+    if(year > min_year || year < max_year){
+        return -1;
+    }
+    if(year == min_year && week < min_week){
+        return -1;
+    }
+    if(year == max_year && week > max_week){
+        return -1;
+    }
+    return 1;
+}
+
+void print_secondary(var_t *aux)
+{
+    while(aux != NULL){
+        printf("%d-%d", aux->year, aux->week);
+        aux = aux->next;
     }
 }
