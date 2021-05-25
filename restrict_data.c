@@ -154,24 +154,28 @@ void restrict_week(fix_t *head, int week, int year)
 void restrict_weeks(fix_t *head, int min_week, int min_year, int max_week, int max_year)
 {
     // create auxiliar struct
-    var_t *aux1 = init_auxiliar_struct(head->var);
-    var_t *save = aux1;
-    while(aux1->next != NULL){
-        if(check_week(aux1->next->year, aux1->next->week, min_week, min_year, max_week, max_year) == -1)
-            remove_var(aux1);
-        else
-            aux1 = aux1->next;
+    var_t *aux1;
+    var_t *save;
+    
+    
+    while(head != NULL){
+		aux1 = init_auxiliar_struct(head->var);
+		save = aux1;
+		while(aux1->next != NULL){
+			if(check_week(aux1->next->year, aux1->next->week, min_week, min_year, max_week, max_year) == -1)
+				remove_var(aux1);
+			else
+				aux1 = aux1->next;
         
-    }
-    head->var = save;
+		}
+		head->var = save->next;
+		head=head->next;
+	}
 }
 
 int check_week(int year, int week, int min_week, int min_year, int max_week, int max_year)
 {
     if(year < min_year || year > max_year){
-        return -1;
-    }
-    if(year > min_year || year < max_year){
         return -1;
     }
     if(year == min_year && week < min_week){
