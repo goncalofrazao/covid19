@@ -113,51 +113,11 @@ fix_t *max_pop(fix_t *head, int n)
     return list_head.next;
 }
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Funtion name: restrict_wee
- * 
- * Arguments: fix_t *head -- head of list to restrict
- *            int week -- week to restrict
- *            int year -- year of the week to restrict
- * 
- * Return: list_head.next -- new head of the list
- * 
- * Description: This funtion removes from the list all weeks of all 
- *              countries except the week that is not supposed to remove
- *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-void restrict_week(fix_t *head, int week, int year)
-{
-    var_t *aux1 = head->var;
-    // create auxiliar struct
-    var_t *saver = init_auxiliar_struct(head->var);
-    // just put in head if list has more than 1 struct
-    if(aux1->next != NULL){
-        // find the week with most cases
-        while(aux1->next != NULL){
-            // if it finds one struct with more cases, saves it in saver
-            if(aux1->next->week == week && aux1->next->year == year){
-                saver = aux1;
-                break;
-            }
-            aux1 = aux1->next;
-        }
-        // put the week with most cases in head of the list of dates
-        head->var = put_in_head(saver, head->var);
-        // free all other dates
-        free_list(head->var->next);
-        head->var->next = NULL;
-    }
-}
-
 void restrict_weeks(fix_t *head, int min_week, int min_year, int max_week, int max_year)
 {
     // create auxiliar struct
     var_t *aux1;
     var_t *save;
-    
-    
     while(head != NULL){
 		aux1 = init_auxiliar_struct(head->var);
 		save = aux1;
@@ -166,7 +126,6 @@ void restrict_weeks(fix_t *head, int min_week, int min_year, int max_week, int m
 				remove_var(aux1);
 			else
 				aux1 = aux1->next;
-        
 		}
 		head->var = save->next;
 		head=head->next;

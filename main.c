@@ -26,59 +26,57 @@ int main(int argc, char **argv)
     char *what_to_read = get_L(argc, argv);
     char *filename_input = get_input_file_name(argc, argv);
     char *filename_output = get_ouput_file_name(argc, argv);
-    char *order = get_S(argc, argv, &year, &week);
-    char *select = get_D(argc, argv);
-    char *restrictor = get_P(argc, argv, &n, &year, &week, &max_year, &max_week);
+    order_data order = get_S(argc, argv, &year, &week);
+    select_data select = get_D(argc, argv);
+    restrict_data restrictor = get_P(argc, argv, &n, &year, &week, &max_year, &max_week);
     if(filename_input == NULL || filename_output == NULL)
         console_error();
     if(what_to_read == NULL){
         what_to_read = (char*) malloc(sizeof(char) * 4);
         strcpy(what_to_read, "all");
     }
-    if(order == NULL){
-        order = (char*) malloc(sizeof(char) * 5);
-        strcpy(order, "alfa");
-    }
     if (filename_input[strlen(filename_input) - 1] == 't')
         read_binary = 1;
     if (filename_output[strlen(filename_output) - 1] == 't')
         write_binary = 1;
-    if(read_binary)
-        binary_input(filename_input);
-    else
-        read_input(what_to_read, filename_input);
     
-    if(strcmp(order, "alfa") == 0)
+    
+    if(read_binary)
+        head = binary_input(filename_input);
+    else
+        head = read_input(what_to_read, filename_input);
+
+    if(order == ALFA)
         head = alpha_order(head);
-    else if(strcmp(order, "pop") == 0)
+    else if(order == POP)
         head = pop_order(head);
-    else if(strcmp(order, "inf") == 0)
+    else if(order == INF)
         head = inf_order(head, year, week);
-    else if(strcmp(order, "dea") == 0)
+    else if(order == DEA)
         head = dea_order(head, year, week);
 
-    if(strcmp(select, "inf") == 0){
+    if(select == SELECT_INF){
         aux1 = head;
         while(aux1 != NULL){
             inf_select(aux1);
             aux1 = aux1->next;
         }
     }
-    else if(strcmp(select, "dea") == 0){
+    else if(select == SELECT_DEA){
         aux1 = head;
         while(aux1 != NULL){
             dea_select(aux1);
             aux1 = aux1->next;
         }
     }
-    else if(strcmp(select, "racioinf") == 0){
+    else if(select == RACIOINF){
         aux1 = head;
         while(aux1 != NULL){
             ratioinf_select(aux1);
             aux1 = aux1->next;
         }
     }
-    else if(strcmp(select, "raciodea") == 0){
+    else if(select == RACIODEA){
         aux1 = head;
         while(aux1 != NULL){
             ratiodea_select(aux1);
@@ -86,14 +84,13 @@ int main(int argc, char **argv)
         }
     }
 
-    printf("test\n");
-    if(strcmp(restrictor, "min") == 0)
+    if(restrictor == MIN)
         head = min_pop(head, n);
-    else if(strcmp(restrictor, "max") == 0)
+    else if(restrictor == MAX)
         head = max_pop(head, n);
-    else if(strcmp(restrictor, "date") == 0)
-        restrict_week(head, week, year);
-    else if(strcmp(restrictor, "dates") == 0)
+    else if(restrictor == DATE)
+        restrict_weeks(head, week, year, week, year);
+    else if(restrictor == DATES)
         restrict_weeks(head, week, year, max_week, max_year);
 
     if(write_binary)

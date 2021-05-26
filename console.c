@@ -33,45 +33,84 @@ char *get_L(int argc, char **argv)
     return NULL;
 }
 
-char *get_S(int argc, char **argv, int *year, int *week)
+order_data get_S(int argc, char **argv, int *year, int *week)
 {
     for(int i = 0; i < argc; i++){
         if(argv[i][0] == '-' && argv[i][1] == 'S' && strlen(argv[i]) == 2){
-            if(strcmp(argv[i + 1], "dea") == 0 || strcmp(argv[i + 1], "inf") == 0)
+            if(strcmp(argv[i + 1], "dea") == 0){
                 sscanf(argv[i + 2], "%d-%d", year, week);
-            return argv[i + 1];
+                return DEA;
+            }
+            else if(strcmp(argv[i + 1], "inf") == 0){
+                sscanf(argv[i + 2], "%d-%d", year, week);
+                return INF;
+            }
+            else if(strcmp(argv[i + 1], "alfa") == 0){
+                return ALFA;
+            }
+            else if(strcmp(argv[i + 1], "pop") != 0){
+                return POP;
+            }
+            else{
+                printf("S argument invalid");
+                console_error();
+            }
         }
     }
-    return NULL;
+    return ALFA;
 }
 
-char *get_D(int argc, char **argv)
+select_data get_D(int argc, char **argv)
 {
     for(int i = 0; i < argc; i++){
-        if(argv[i][0] == '-' && argv[i][1] == 'D' && strlen(argv[i]) == 2)
-            return argv[i + 1];
+        if(argv[i][0] == '-' && argv[i][1] == 'D' && strlen(argv[i]) == 2){
+            if(strcmp(argv[i + 1], "inf") == 0)
+                return SELECT_INF;
+            else if(strcmp(argv[i + 1], "dea") == 0)
+                return SELECT_DEA;
+            else if(strcmp(argv[i + 1], "racioinf") == 0)
+                return RACIOINF;
+            else if(strcmp(argv[i + 1], "raciodea") != 0)
+                return RACIODEA;
+            else{
+                printf("D argument invalid\n");
+                console_error();
+            }
+        }
     }
-    return NULL;
+    return NO_INPUT_1;
 }
 
-char *get_P(int argc, char **argv, int *n, int *year, int *week, int *max_year, int *max_week)
+restrict_data get_P(int argc, char **argv, int *n, int *year, int *week, int *max_year, int *max_week)
 {
     for(int i = 0; i < argc; i++){
         if(argv[i][0] == '-' && argv[i][1] == 'P' && strlen(argv[i]) == 2){
-            if(strcmp(argv[i + 1], "min") == 0 || strcmp(argv[i + 1], "max") == 0)
+            if(strcmp(argv[i + 1], "min") == 0){
                 (*n) = atoi(argv[i + 2]);
-            else if(strcmp(argv[i + 1], "date") == 0)
+                return MIN;
+            }
+            else if(strcmp(argv[i + 1], "max") == 0){
+                (*n) = atoi(argv[i + 2]);
+                return MAX;
+            }
+            else if(strcmp(argv[i + 1], "date") == 0){
                 sscanf(argv[i + 2], "%d-%d", year, week);
+                return DATE;
+            }
             else if(strcmp(argv[i + 1], "dates") == 0){
                 sscanf(argv[i + 2], "%d-%d", year, week);
-                sscanf(argv[i + 2], "%d-%d", max_year, max_week);
+                sscanf(argv[i + 3], "%d-%d", max_year, max_week);
                 if(check_dates((*year), (*week), (*max_year), (*max_week)) == -1)
                     change_dates(year, week, max_year, max_week);
+                return DATES;
             }
-            return argv[i + 1];
+            else{
+                printf("P argument invalid\n");
+                console_error();
+            }
         }
     }
-    return NULL;
+    return NO_INPUT_2;
 }
 
 int check_dates(int year1, int week1, int year2, int week2)

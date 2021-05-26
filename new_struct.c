@@ -132,10 +132,14 @@ var_t *create_date(int year, int week, char *indicator, int weekly_count, double
     aux->year = year;
     aux->next = NULL;
     if(strcmp(indicator, "cases") == 0){        // set cases stats
+        aux->cases = 1;
+        aux->deaths = 0;
         aux->weekly_cases = weekly_count;
         aux->rate_cases = rate_14_day;
         aux->cumulative_cases = cumulative_count;
     }else{                                      // set deaths stats
+        aux->deaths = 1;
+        aux->cases = 0;
         aux->weekly_deaths = weekly_count;
         aux->rate_deaths = rate_14_day;
         aux->cumulative_deaths = cumulative_count;

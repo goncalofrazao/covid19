@@ -16,9 +16,7 @@
  *
  * Return: fix_t *head -- pointer to the head of list of countries
  *
- *
  * Description: This function reads the input file
- *
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -154,25 +152,6 @@ fix_t *read_input(char *what_to_read, char *filename)
     return head;
 }
 
-void _op(fix_t *head, char *filename)
-{
-    fix_t *aux1;
-    var_t *aux2;
-    FILE *fp = fopen(filename, "w");
-    while(head != NULL){
-        fprintf(fp, "%s, %lu\n", head->name, head->population);
-        while(head->var != NULL){
-            aux2 = head->var->next;
-            free(head->var);
-            head->var = aux2;
-        }
-        aux1 = head->next;
-        free(head);
-        head = aux1;
-    }
-    fclose(fp);
-}
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Function name: output
  *
@@ -181,10 +160,8 @@ void _op(fix_t *head, char *filename)
  *
  * Return: no return
  *
- *
  * Description: This function creates a .csv file with the data
  *              from the structures
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void output(fix_t *head, char *filename)
@@ -216,10 +193,8 @@ void output(fix_t *head, char *filename)
  *
  * Return: no return
  *
- *
  * Description: This function creates a .dat binary file with the data
  *              from the structures
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void binary_output(fix_t *head, char *filename)
@@ -251,13 +226,9 @@ void binary_output(fix_t *head, char *filename)
  *
  * Arguments: char *filename -- name of the file
  *
- *
  * Return: fix_t *head -- pointer to the head of list of countries
  *
- *
  * Description: This function reads the .dat input file
- *
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 fix_t *binary_input(char *filename)
@@ -293,13 +264,9 @@ fix_t *binary_input(char *filename)
  *
  * Arguments: var_t *head -- pointer to the head of list of countries
  *
- *
  * Return: int i -- number of var_t type structures
  *
- *
  * Description: This function counts the number of var_t type structures
- *
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 int count_var(var_t *head)
@@ -317,13 +284,9 @@ int count_var(var_t *head)
  *
  * Arguments: var_t *head -- pointer to the head of list of countries
  *
- *
  * Return: int i -- number of fix_t type structures
  *
- *
  * Description: This function counts the number of var_t type structures
- *
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 int count_fix(fix_t *head)
@@ -341,13 +304,10 @@ int count_fix(fix_t *head)
  *
  * Arguments: char *check -- string to check
  *
- *
  * Return: no return
- *
  *
  * Description: Checks if string only has characters from a to z, A to Z
  *              or space. If it doesn't, it ends the program
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void check_string(char *check)
@@ -363,13 +323,10 @@ void check_string(char *check)
  *
  * Arguments: char *check -- string to check
  *
- *
  * Return: no return
- *
  *
  * Description: Checks if string only has numbers
  *              If it doesn't, it ends the program
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void check_int(char *check)
@@ -386,13 +343,10 @@ void check_int(char *check)
  *
  * Arguments: char *check -- string to check
  *
- *
  * Return: no return
- *
  *
  * Description: Checks if string only has numbers and one '.'
  *              If it doesn't, it ends the program
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void check_float(char *check)
@@ -413,13 +367,10 @@ void check_float(char *check)
  *
  * Arguments: char *check -- string to check
  *
- *
  * Return: no return
- *
  *
  * Description: Counts the number of commas in the string
  *              If the number is less than 8, it ends the program
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void check_line(char *line)
@@ -439,13 +390,10 @@ void check_line(char *line)
  *
  * Arguments: char *date -- string to check
  *
- *
  * Return: no return
- *
  *
  * Description: Check if string only has number and one '-'
  *              If it doesn't, it ends the program
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void check_date(char *date)
@@ -466,9 +414,7 @@ void check_date(char *date)
  *
  * Arguments: no arguments
  *
- *
  * Return: no return
- *
  *
  * Description: Prints error message and ends program
  *
