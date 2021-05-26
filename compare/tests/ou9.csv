@@ -1,0 +1,21 @@
+country,country_code,continent,population,indicator,weekly_count,year_week,rate_14_day,cumulative_count
+Angola, AGO, Africa, 32866268, cases, 1779, 2020-44, 10.172000, 10805
+Angola, AGO, Africa, 32866268, deaths, 17, 2020-44, 1.308000, 284
+Australia, AUS, Oceania, 25499881, cases, 3161, 2020-32, 26.200000, 21084
+Australia, AUS, Oceania, 25499881, deaths, 87, 2020-32, 5.490000, 295
+Austria, AUT, Europe, 8901064, cases, 42630, 2020-47, 1051.739000, 246124
+Austria, AUT, Europe, 8901064, deaths, 520, 2020-47, 97.067000, 2199
+Brazil, BRA, America, 212559409, cases, 526089, 2021-12, 495.864000, 12573615
+Brazil, BRA, America, 212559409, deaths, 18441, 2021-12, 162.684000, 313866
+China, CHN, Asia, 1439323774, cases, 30412, 2020- 7, 3.711000, 70618
+China, CHN, Asia, 1439323774, deaths, 862, 2020- 7, 0.980000, 1771
+France, FRA, Europe, 67320216, cases, 373409, 2020-45, 963.777000, 1787324
+France, FRA, Europe, 67320216, deaths, 3420, 2020-45, 84.343000, 40439
+Portugal, PRT, Europe, 10295909, cases, 83208, 2021- 4, 1649.374000, 726321
+Portugal, PRT, Europe, 10295909, deaths, 2036, 2021- 4, 362.183000, 12757
+South Africa, ZAF, Africa, 59308690, cases, 106329, 2021- 2, 399.904000, 1337926
+South Africa, ZAF, Africa, 59308690, deaths, 3942, 2021- 2, 126.929000, 37105
+Thailand, THA, Asia, 69799978, cases, 10132, 2021-15, 20.938000, 43742
+Thailand, THA, Asia, 69799978, deaths, 7, 2021-15, 0.129000, 104
+United States Of America, USA, America, 331002647, cases, 1515282, 2021- 2, 996.389000, 23938288
+United States Of America, USA, America, 331002647, deaths, 23169, 2021- 2, 139.035000, 397611
