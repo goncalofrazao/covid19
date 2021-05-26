@@ -173,9 +173,9 @@ void output(fix_t *head, char *filename)
     while(head != NULL){
         while(head->var != NULL){
             if(head->var->cases == 1)
-                fprintf(fp, "%s, %s, %s, %lu, cases, %d, %d-%d, %f, %d\n", head->name, head->initials, head->continent, head->population, head->var->weekly_cases, head->var->year, head->var->week, head->var->rate_cases, head->var->cumulative_cases);
+                fprintf(fp, "%s, %s, %s, %lu, cases, %d, %4d-%2d, %f, %d\n", head->name, head->initials, head->continent, head->population, head->var->weekly_cases, head->var->year, head->var->week, head->var->rate_cases, head->var->cumulative_cases);
             if(head->var->deaths == 1)
-                fprintf(fp, "%s, %s, %s, %lu, deaths, %d, %d-%d, %f, %d\n", head->name, head->initials, head->continent, head->population, head->var->weekly_deaths, head->var->year, head->var->week, head->var->rate_deaths, head->var->cumulative_deaths);
+                fprintf(fp, "%s, %s, %s, %lu, deaths, %d, %4d-%2d, %f, %d\n", head->name, head->initials, head->continent, head->population, head->var->weekly_deaths, head->var->year, head->var->week, head->var->rate_deaths, head->var->cumulative_deaths);
             aux2 = head->var->next;
             free(head->var);
             head->var = aux2;
