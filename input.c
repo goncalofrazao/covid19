@@ -50,7 +50,7 @@ fix_t *read_input(char *what_to_read, char *filename)
     if((fp = fopen (filename, "r"))==NULL)
     {
         printf("Erro na abertura do ficheiro");
-        return NULL;
+        exit(EXIT_FAILURE);
     }
     fscanf(fp, "%*[^\n]\n");
 
