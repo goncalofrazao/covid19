@@ -8,7 +8,7 @@
 
 char *get_input_file_name(int argc, char **argv)
 {
-    for(int i = 0; i < argc; i++){
+    for(int i = 1; i < argc; i++){
         if(argv[i][0] == '-' && argv[i][1] == 'i' && strlen(argv[i]) == 2)
             return argv[i + 1];
     }
@@ -17,7 +17,7 @@ char *get_input_file_name(int argc, char **argv)
 
 char *get_ouput_file_name(int argc, char **argv)
 {
-    for(int i = 0; i < argc; i++){
+    for(int i = 1; i < argc; i++){
         if(argv[i][0] == '-' && argv[i][1] == 'o' && strlen(argv[i]) == 2)
             return argv[i + 1];
     }
@@ -26,7 +26,7 @@ char *get_ouput_file_name(int argc, char **argv)
 
 char *get_L(int argc, char **argv)
 {
-    for(int i = 0; i < argc; i++){
+    for(int i = 1; i < argc; i++){
         if(argv[i][0] == '-' && argv[i][1] == 'L' && strlen(argv[i]) == 2)
             return argv[i + 1];
     }
@@ -35,7 +35,7 @@ char *get_L(int argc, char **argv)
 
 order_data get_S(int argc, char **argv, int *year, int *week)
 {
-    for(int i = 0; i < argc; i++){
+    for(int i = 1; i < argc; i++){
         if(argv[i][0] == '-' && argv[i][1] == 'S' && strlen(argv[i]) == 2){
             if(strcmp(argv[i + 1], "dea") == 0){
                 sscanf(argv[i + 2], "%d-%d", year, week);
@@ -48,11 +48,11 @@ order_data get_S(int argc, char **argv, int *year, int *week)
             else if(strcmp(argv[i + 1], "alfa") == 0){
                 return ALFA;
             }
-            else if(strcmp(argv[i + 1], "pop") != 0){
+            else if(strcmp(argv[i + 1], "pop") == 0){
                 return POP;
             }
             else{
-                printf("S argument invalid");
+                printf("S argument invalid\n");
                 console_error();
             }
         }
@@ -62,7 +62,7 @@ order_data get_S(int argc, char **argv, int *year, int *week)
 
 select_data get_D(int argc, char **argv)
 {
-    for(int i = 0; i < argc; i++){
+    for(int i = 1; i < argc; i++){
         if(argv[i][0] == '-' && argv[i][1] == 'D' && strlen(argv[i]) == 2){
             if(strcmp(argv[i + 1], "inf") == 0)
                 return SELECT_INF;
@@ -83,7 +83,7 @@ select_data get_D(int argc, char **argv)
 
 restrict_data get_P(int argc, char **argv, int *n, int *year, int *week, int *max_year, int *max_week)
 {
-    for(int i = 0; i < argc; i++){
+    for(int i = 1; i < argc; i++){
         if(argv[i][0] == '-' && argv[i][1] == 'P' && strlen(argv[i]) == 2){
             if(strcmp(argv[i + 1], "min") == 0){
                 (*n) = atoi(argv[i + 2]);

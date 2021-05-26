@@ -145,11 +145,3 @@ int check_week(int year, int week, int min_week, int min_year, int max_week, int
     }
     return 1;
 }
-
-void print_secondary(var_t *aux)
-{
-    while(aux != NULL){
-        printf("%d-%d", aux->year, aux->week);
-        aux = aux->next;
-    }
-}
