@@ -70,7 +70,7 @@ select_data get_D(int argc, char **argv)
                 return SELECT_DEA;
             else if(strcmp(argv[i + 1], "racioinf") == 0)
                 return RACIOINF;
-            else if(strcmp(argv[i + 1], "raciodea") != 0)
+            else if(strcmp(argv[i + 1], "raciodea") == 0)
                 return RACIODEA;
             else{
                 printf("D argument invalid\n");
