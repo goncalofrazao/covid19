@@ -168,10 +168,13 @@ void update_date(var_t *aux, char *indicator, int weekly_count, double rate_14_d
         aux->weekly_cases = weekly_count;
         aux->rate_cases = rate_14_day;
         aux->cumulative_cases = cumulative_count;
-    }else{                                      // update deaths stats
+        aux->cases = 1;
+    }
+    else{                                      // update deaths stats
         aux->weekly_deaths = weekly_count;
         aux->rate_deaths = rate_14_day;
         aux->cumulative_deaths = cumulative_count;
+        aux->deaths = 1;
     }
 }
 

@@ -172,8 +172,10 @@ void output(fix_t *head, char *filename)
     fprintf(fp, "country,country_code,continent,population,indicator,weekly_count,year_week,rate_14_day,cumulative_count\n");
     while(head != NULL){
         while(head->var != NULL){
-            fprintf(fp, "%s, %s, %s, %lu, cases, %d, %d-%d, %f, %d\n", head->name, head->initials, head->continent, head->population, head->var->weekly_cases, head->var->year, head->var->week, head->var->rate_cases, head->var->cumulative_cases);
-            fprintf(fp, "%s, %s, %s, %lu, deaths, %d, %d-%d, %f, %d\n", head->name, head->initials, head->continent, head->population, head->var->weekly_deaths, head->var->year, head->var->week, head->var->rate_deaths, head->var->cumulative_deaths);
+            if(head->var->cases == 1)
+                fprintf(fp, "%s, %s, %s, %lu, cases, %d, %d-%d, %f, %d\n", head->name, head->initials, head->continent, head->population, head->var->weekly_cases, head->var->year, head->var->week, head->var->rate_cases, head->var->cumulative_cases);
+            if(head->var->deaths == 1)
+                fprintf(fp, "%s, %s, %s, %lu, deaths, %d, %d-%d, %f, %d\n", head->name, head->initials, head->continent, head->population, head->var->weekly_deaths, head->var->year, head->var->week, head->var->rate_deaths, head->var->cumulative_deaths);
             aux2 = head->var->next;
             free(head->var);
             head->var = aux2;
