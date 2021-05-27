@@ -38,6 +38,8 @@ void inf_select(fix_t *country)
         country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
+        // no deaths to output
+        country->var->deaths = 0;
         country->var->next = NULL;
     }
 }
@@ -129,6 +131,8 @@ void dea_select(fix_t *country)
         country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
+        // no cases to output
+        country->var->cases = 0;
         country->var->next = NULL;
     }
 }
@@ -165,6 +169,8 @@ void ratioinf_select(fix_t *country)
         country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
+        // no deaths to output
+        country->var->deaths = 0;
         country->var->next = NULL;
     }
 }
@@ -201,6 +207,8 @@ void ratiodea_select(fix_t *country)
         country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
+        // no deaths to output
+        country->var->cases = 0;
         country->var->next = NULL;
     }
 }

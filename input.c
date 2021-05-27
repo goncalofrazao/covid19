@@ -16,7 +16,7 @@
  *
  * Return: fix_t *head -- pointer to the head of list of countries
  *
- * Description: This function reads the input file
+ * Description: This function reads the input file name
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -472,7 +472,6 @@ void check_indicator(char *indicator)
  * Return: no return
  *
  * Description: Prints error message and ends program
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void read_error()
