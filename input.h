@@ -17,6 +17,7 @@ void check_int(char *check);
 void check_float(char *check);
 void check_line(char *line);
 void check_date(char *date);
+void check_indicator(char *indicator);
 void read_error();
 
 #endif // INPUT_H_INCLUDED

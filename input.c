@@ -135,6 +135,7 @@ fix_t *read_input(char *what_to_read, char *filename)
                 rate_14_day = atof(column[7]);
                 cumulative_count = atoi(column[8]);
             }
+            check_indicator(indicator);
             aux1 = find_country(head, country);
             //if a structure for the country doesnt exist yet, we create one
             if(aux1 == NULL){
@@ -443,6 +444,23 @@ void check_date(char *date)
     if(ifen_number != 1)
         read_error();
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: check_indicator
+ *
+ * Arguments: char *indicator -- string to check
+ *
+ * Return: no return
+ *
+ * Description: Check if string is different than "cases" and "deaths"
+ *              it ends the program
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ 
+void check_indicator(char *indicator)
+{
+	if(strcmp(indicator,"cases") != 0 && strcmp(indicator,"deaths") != 0)
+		read_error();
+	}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Function name: read_error
