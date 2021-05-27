@@ -4,8 +4,6 @@
 #ifndef _STRUCTURES_
 #define _STRUCTURES_
 
-//typedef unsigned long uint32_t;
-
 typedef struct fix //linked list with country data
 {
     char name[30];     //name of the country
