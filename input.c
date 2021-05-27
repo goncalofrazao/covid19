@@ -256,6 +256,7 @@ void binary_output(fix_t *head, char *filename)
 
 fix_t *binary_input(char *filename)
 {
+    // open file
     FILE *fp = fopen(filename, "rb");
     int i = 0;
     int j = 0;
@@ -284,6 +285,7 @@ fix_t *binary_input(char *filename)
             aux2->var = insert_var(aux1, aux2->var);
         }
     }
+    // close file
     fclose(fp);
     return head;
 }
@@ -416,7 +418,7 @@ void check_line(char *line)
         line++;
     }
     //every line on the .csv file has 8 commas
-    if(comma_number < 8)
+    if(comma_number != 8)
         read_error();
 }
 
