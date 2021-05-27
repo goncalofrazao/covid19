@@ -161,7 +161,7 @@ void ratioinf_select(fix_t *country)
             }
             aux1 = aux1->next;
         }
-        // put the week with most cases in head of the list of dates
+        // put the week with most ratio of cases in head of the list of dates
         country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
@@ -197,7 +197,7 @@ void ratiodea_select(fix_t *country)
             }
             aux1 = aux1->next;
         }
-        // put the week with most cases in head of the list of dates
+        // put the week with most ratio of deaths in head of the list of dates
         country->var = put_in_head(saver, country->var);
         // free all other dates
         free_list(country->var->next);
@@ -220,7 +220,10 @@ void ratiodea_select(fix_t *country)
 
 var_t *init_auxiliar_struct(var_t *head)
 {
+    // create a struct of type var
     static var_t aux_struct;
+    // put the struct pointing to the head
     aux_struct.next = head;
+    // return a pointer to auxiliar struct
     return &aux_struct;
 }
