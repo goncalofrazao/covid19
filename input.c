@@ -315,11 +315,11 @@ int count_var(var_t *head)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Function name: count_fix
  *
- * Arguments: var_t *head -- pointer to the head of list of countries
+ * Arguments: fix_t *head -- pointer to the head of list of countries
  *
  * Return: int i -- number of fix_t type structures
  *
- * Description: This function counts the number of var_t type structures
+ * Description: This function counts the number of fix_t type structures
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 int count_fix(fix_t *head)
@@ -406,7 +406,7 @@ void check_float(char *check)
  * Return: no return
  *
  * Description: Counts the number of commas in the string
- *              If the number is less than 8, it ends the program
+ *              If the number is different than 8, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 void check_line(char *line)
