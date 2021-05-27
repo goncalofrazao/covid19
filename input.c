@@ -56,7 +56,8 @@ fix_t *read_input(char *what_to_read, char *filename)
     while(fgets(str, MAXLEN, fp) != NULL){
         check_line(str);
         stringlen = strlen(str);
-
+        
+		//new line = end of string
         if(str[stringlen - 1] == '\n')
             str[stringlen - 2] = '\0';
 
@@ -64,7 +65,7 @@ fix_t *read_input(char *what_to_read, char *filename)
             str[stringlen - 2] = '\0';
             str[stringlen - 1] = '\0';
         }
-
+        
         token = strtok(str, ",");
         column[0] = token;
         i = 1;
@@ -439,7 +440,7 @@ void check_date(char *date)
             read_error();
     }
     //dates are on the format year-week, so they only have one ifen
-    if(ifen_number > 1 || ifen_number == 0)
+    if(ifen_number != 1)
         read_error();
 }
 
