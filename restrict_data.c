@@ -20,12 +20,19 @@
 
 void remove_fix(fix_t *to_remove)
 {
+    var_t *aux2;
     // save struct to remove
-    fix_t *aux = to_remove->next;
+    fix_t *aux1 = to_remove->next;
+    // libert var part
+    while(aux1->var != NULL){
+        aux2 = aux1->var;
+        aux1->var = aux1->var->next;
+        free(aux2);
+    }
     // remove struct
     to_remove->next = to_remove->next->next;
     // libert memory of struct
-    free(aux);
+    free(aux1);
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
