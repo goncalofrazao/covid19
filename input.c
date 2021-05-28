@@ -463,8 +463,11 @@ void check_date(char *date, fix_t *head, FILE *fp)
         }
     }
     //dates are on the format year-week, so they only have one ifen
-    if(ifen_number != 1)
+    if(ifen_number != 1){
+		fclose(fp);
+		free_full_list(head);
         read_error();
+	}
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
