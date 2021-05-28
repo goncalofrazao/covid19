@@ -126,7 +126,7 @@ var_t *find_date(var_t *head, int year, int week)
 var_t *create_date(int year, int week, char *indicator, int weekly_count, double rate_14_day, int cumulative_count)
 {
     // allocate memory for the struct
-    var_t *aux = (var_t*) malloc(sizeof(var_t));
+    var_t *aux = (var_t*) calloc(1, sizeof(var_t));
     // set global stats
     aux->week = week;
     aux->year = year;
