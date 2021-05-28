@@ -346,6 +346,8 @@ int count_fix(fix_t *head)
  * Function name: check_string
  *
  * Arguments: char *check -- string to check
+ *            fix_t *head -- head of list to free if ends program
+ *            FILE *fp -- file to close if ends program
  *
  * Return: no return
  *
@@ -367,6 +369,8 @@ void check_string(char *check, fix_t *head, FILE *fp)
  * Function name: check_int
  *
  * Arguments: char *check -- string to check
+ *            fix_t *head -- head of list to free if ends program
+ *            FILE *fp -- file to close if ends program
  *
  * Return: no return
  *
@@ -389,6 +393,8 @@ void check_int(char *check, fix_t *head, FILE *fp)
  * Function name: check_float
  *
  * Arguments: char *check -- string to check
+ *            fix_t *head -- head of list to free if ends program
+ *            FILE *fp -- file to close if ends program
  *
  * Return: no return
  *
@@ -418,6 +424,8 @@ void check_float(char *check, fix_t *head, FILE *fp)
  * Function name: check_line
  *
  * Arguments: char *check -- string to check
+ *            fix_t *head -- head of list to free if ends program
+ *            FILE *fp -- file to close if ends program
  *
  * Return: no return
  *
@@ -444,6 +452,8 @@ void check_line(char *line, fix_t *head, FILE *fp)
  * Function name: check_date
  *
  * Arguments: char *date -- string to check
+ *            fix_t *head -- head of list to free if ends program
+ *            FILE *fp -- file to close if ends program
  *
  * Return: no return
  *
@@ -473,6 +483,8 @@ void check_date(char *date, fix_t *head, FILE *fp)
  * Function name: check_indicator
  *
  * Arguments: char *indicator -- string to check
+ *            fix_t *head -- head of list to free if ends program
+ *            FILE *fp -- file to close if ends program
  *
  * Return: no return
  *
@@ -491,7 +503,7 @@ void check_indicator(char *indicator, fix_t *head, FILE *fp)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Function name: read_error
  *
- * Arguments: no arguments
+ * Arguments: fix_t *head -- head of list to free
  *
  * Return: no return
  *
