@@ -54,7 +54,7 @@ fix_t *read_input(char *what_to_read, char *filename)
     fscanf(fp, "%*[^\n]\n");
 
     while(fgets(str, MAXLEN, fp) != NULL){
-        check_line(str, head);
+        check_line(str, head, fp);
         stringlen = strlen(str);
         
 		//new line = end of string
@@ -86,26 +86,26 @@ fix_t *read_input(char *what_to_read, char *filename)
             case 1:
             case 2:
             case 4:
-                check_string(column[j], head);
+                check_string(column[j], head, fp);
                 break;
 			//for columns 0,1,2,4 we need to check the int
             case 3:
             case 5:
             case 8:
-                check_int(column[j], head);
+                check_int(column[j], head, fp);
                 break;
 			//for columns 6 we need to check if the date is in the right format
             case 6:
-                check_date(column[j], head);
+                check_date(column[j], head, fp);
                 break;
             case 7:
 				//if it only has 8 columns, check int (cumulative count)
                 if(i == 8){
-                    check_int(column[j], head);
+                    check_int(column[j], head, fp);
                 }
                 //if it has 9 columns, check float (rate_14_day)
                 else{
-                    check_float(column[j], head);
+                    check_float(column[j], head, fp);
                 }
                 break;
 
@@ -137,7 +137,7 @@ fix_t *read_input(char *what_to_read, char *filename)
                 rate_14_day = atof(column[7]);
                 cumulative_count = atoi(column[8]);
             }
-            check_indicator(indicator, head);
+            check_indicator(indicator, head, fp);
             aux1 = find_country(head, country);
             //if a structure for the country doesnt exist yet, we create one
             if(aux1 == NULL){
@@ -347,10 +347,11 @@ int count_fix(fix_t *head)
  *              or space. If it doesn't, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void check_string(char *check, fix_t *head)
+void check_string(char *check, fix_t *head, FILE *fp)
 {
     for(int i = 0; i < strlen(check); i++){
         if(!((check[i] >= 'a' && check[i] <= 'z') || (check[i] >= 'A' && check[i] <= 'Z') || (check[i] == ' '))){
+            fclose(fp);
             free_full_list(head);
             read_error();
         }
@@ -368,11 +369,12 @@ void check_string(char *check, fix_t *head)
  *              If it doesn't, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void check_int(char *check, fix_t *head)
+void check_int(char *check, fix_t *head, FILE *fp)
 {
     for(int i = 0; i < strlen(check); i++){
 
         if(!(check[i] >= '0' && check[i] <= '9')){
+            fclose(fp);
             free_full_list(head);
             read_error();
         }
@@ -390,11 +392,12 @@ void check_int(char *check, fix_t *head)
  *              If it doesn't, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void check_float(char *check, fix_t *head)
+void check_float(char *check, fix_t *head, FILE *fp)
 {
     int flag = 0;
     for(int i = 0; i < strlen(check); i++){
         if(!((check[i] >= '0' && check[i] <= '9') || (check[i] == '.'))){
+            fclose(fp);
             free_full_list(head);
             read_error();
         }
@@ -402,8 +405,11 @@ void check_float(char *check, fix_t *head)
             flag++;
     }
     //floats only have one '.', more than that is an error
-    if(flag > 1)
+    if(flag > 1){
+        fclose(fp);
+        free_full_list(head);
         read_error();
+    }
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -417,7 +423,7 @@ void check_float(char *check, fix_t *head)
  *              If the number is different than 8, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void check_line(char *line, fix_t *head)
+void check_line(char *line, fix_t *head, FILE *fp)
 {
     int comma_number = 0;
     while((*line) != '\0'){
@@ -427,6 +433,7 @@ void check_line(char *line, fix_t *head)
     }
     //every line on the .csv file has 8 commas
     if(comma_number != 8){
+        fclose(fp);
         free_full_list(head);
         read_error();
     }
@@ -443,13 +450,14 @@ void check_line(char *line, fix_t *head)
  *              If it doesn't, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void check_date(char *date, fix_t *head)
+void check_date(char *date, fix_t *head, FILE *fp)
 {
     int ifen_number = 0;
     for(int i = 0; i < strlen(date); i++){
         if(date[i] == '-')
             ifen_number++;
         if((date[i] < '0' || date[i] > '9') && !(date[i] == '-')){
+            fclose(fp);
             free_full_list(head);
             read_error();
         }
@@ -470,9 +478,10 @@ void check_date(char *date, fix_t *head)
  *              it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
  
-void check_indicator(char *indicator, fix_t *head)
+void check_indicator(char *indicator, fix_t *head, FILE *fp)
 {
 	if(strcmp(indicator,"cases") != 0 && strcmp(indicator,"deaths") != 0){
+        fclose(fp);
         free_full_list(head);
 		read_error();
     }
