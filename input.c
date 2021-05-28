@@ -54,7 +54,7 @@ fix_t *read_input(char *what_to_read, char *filename)
     fscanf(fp, "%*[^\n]\n");
 
     while(fgets(str, MAXLEN, fp) != NULL){
-        check_line(str);
+        check_line(str, head);
         stringlen = strlen(str);
         
 		//new line = end of string
@@ -86,26 +86,26 @@ fix_t *read_input(char *what_to_read, char *filename)
             case 1:
             case 2:
             case 4:
-                check_string(column[j]);
+                check_string(column[j], head);
                 break;
 			//for columns 0,1,2,4 we need to check the int
             case 3:
             case 5:
             case 8:
-                check_int(column[j]);
+                check_int(column[j], head);
                 break;
 			//for columns 6 we need to check if the date is in the right format
             case 6:
-                check_date(column[j]);
+                check_date(column[j], head);
                 break;
             case 7:
 				//if it only has 8 columns, check int (cumulative count)
                 if(i == 8){
-                    check_int(column[j]);
+                    check_int(column[j], head);
                 }
                 //if it has 9 columns, check float (rate_14_day)
                 else{
-                    check_float(column[j]);
+                    check_float(column[j], head);
                 }
                 break;
 
@@ -124,8 +124,10 @@ fix_t *read_input(char *what_to_read, char *filename)
             weekly_count = atoi(column[5]);
             sscanf(column[6], "%d-%d", &year, &week);
             //there are no years with 54 weeks!
-            if(week > 53)
+            if(week > 53){
+                free_full_list(head);
                 read_error();
+            }
 			//sometimes there is no data for rate_14_day, in those cases strtok only creates 8 tokens!
             if(i == 8){
                 cumulative_count = atoi(column[7]);
@@ -135,7 +137,7 @@ fix_t *read_input(char *what_to_read, char *filename)
                 rate_14_day = atof(column[7]);
                 cumulative_count = atoi(column[8]);
             }
-            check_indicator(indicator);
+            check_indicator(indicator, head);
             aux1 = find_country(head, country);
             //if a structure for the country doesnt exist yet, we create one
             if(aux1 == NULL){
@@ -345,11 +347,13 @@ int count_fix(fix_t *head)
  *              or space. If it doesn't, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void check_string(char *check)
+void check_string(char *check, fix_t *head)
 {
     for(int i = 0; i < strlen(check); i++){
-        if(!((check[i] >= 'a' && check[i] <= 'z') || (check[i] >= 'A' && check[i] <= 'Z') || (check[i] == ' ')))
+        if(!((check[i] >= 'a' && check[i] <= 'z') || (check[i] >= 'A' && check[i] <= 'Z') || (check[i] == ' '))){
+            free_full_list(head);
             read_error();
+        }
     }
 }
 
@@ -364,12 +368,14 @@ void check_string(char *check)
  *              If it doesn't, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void check_int(char *check)
+void check_int(char *check, fix_t *head)
 {
     for(int i = 0; i < strlen(check); i++){
 
-        if(!(check[i] >= '0' && check[i] <= '9'))
+        if(!(check[i] >= '0' && check[i] <= '9')){
+            free_full_list(head);
             read_error();
+        }
     }
 }
 
@@ -384,12 +390,14 @@ void check_int(char *check)
  *              If it doesn't, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void check_float(char *check)
+void check_float(char *check, fix_t *head)
 {
     int flag = 0;
     for(int i = 0; i < strlen(check); i++){
-        if(!((check[i] >= '0' && check[i] <= '9') || (check[i] == '.')))
+        if(!((check[i] >= '0' && check[i] <= '9') || (check[i] == '.'))){
+            free_full_list(head);
             read_error();
+        }
         if(check[i] == '.')
             flag++;
     }
@@ -409,7 +417,7 @@ void check_float(char *check)
  *              If the number is different than 8, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void check_line(char *line)
+void check_line(char *line, fix_t *head)
 {
     int comma_number = 0;
     while((*line) != '\0'){
@@ -418,8 +426,10 @@ void check_line(char *line)
         line++;
     }
     //every line on the .csv file has 8 commas
-    if(comma_number != 8)
+    if(comma_number != 8){
+        free_full_list(head);
         read_error();
+    }
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -433,14 +443,16 @@ void check_line(char *line)
  *              If it doesn't, it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void check_date(char *date)
+void check_date(char *date, fix_t *head)
 {
     int ifen_number = 0;
     for(int i = 0; i < strlen(date); i++){
         if(date[i] == '-')
             ifen_number++;
-        if((date[i] < '0' || date[i] > '9') && !(date[i] == '-'))
+        if((date[i] < '0' || date[i] > '9') && !(date[i] == '-')){
+            free_full_list(head);
             read_error();
+        }
     }
     //dates are on the format year-week, so they only have one ifen
     if(ifen_number != 1)
@@ -458,11 +470,13 @@ void check_date(char *date)
  *              it ends the program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
  
-void check_indicator(char *indicator)
+void check_indicator(char *indicator, fix_t *head)
 {
-	if(strcmp(indicator,"cases") != 0 && strcmp(indicator,"deaths") != 0)
+	if(strcmp(indicator,"cases") != 0 && strcmp(indicator,"deaths") != 0){
+        free_full_list(head);
 		read_error();
-	}
+    }
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Function name: read_error
@@ -478,4 +492,32 @@ void read_error()
 {
     printf("-1 READ ERROR\n");
     exit(EXIT_FAILURE);
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Function name: free_full_list
+ *
+ * Arguments: fix_t *head -- main head of the list to free
+ *
+ * Return: no return
+ *
+ * Description: This function liberts fully a list
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+void free_full_list(fix_t *head)
+{
+    fix_t *aux1;
+    var_t *aux2;
+    // libert all fix structures
+    while(head != NULL){
+        // libert all var structures
+        while(head->var != NULL){
+            aux2 = head->var->next;
+            free(head->var);
+            head->var = aux2;
+        }
+        aux1 = head->next;
+        free(head);
+        head = aux1;
+    }
 }

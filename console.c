@@ -78,7 +78,7 @@ char *get_L(int argc, char **argv)
         // return pointer to string after '-L'
         if(argv[i][0] == '-' && argv[i][1] == 'L' && strlen(argv[i]) == 2){
             // check if continent is valid
-            if(strmp(argv[i + 1], "all") != 0 && strmp(argv[i + 1], "Europe") != 0 && strmp(argv[i + 1], "Africa") != 0 && strmp(argv[i + 1], "Asia") != 0 && strmp(argv[i + 1], "Oceania") != 0 && strmp(argv[i + 1], "America") != 0){
+            if(strcmp(argv[i + 1], "all") != 0 && strcmp(argv[i + 1], "Europe") != 0 && strcmp(argv[i + 1], "Africa") != 0 && strcmp(argv[i + 1], "Asia") != 0 && strcmp(argv[i + 1], "Oceania") != 0 && strcmp(argv[i + 1], "America") != 0){
                 printf("INVALID CONTINENT\n");
                 console_error();
             }
