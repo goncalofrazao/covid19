@@ -74,7 +74,8 @@ fix_t *read_input(char *what_to_read, char *filename)
         }
         //less than 8 columns is an error
         if(i < 8){
-            read_error();
+			fclose(fp);
+            read_error(head);
         }
 
         //check errors
@@ -125,9 +126,8 @@ fix_t *read_input(char *what_to_read, char *filename)
             sscanf(column[6], "%d-%d", &year, &week);
             //there are no years with 54 weeks!
             if(week > 53){
-                fclose(fp);
-                free_full_list(head);
-                read_error();
+				fclose(fp);
+                read_error(head);
             }
 			//sometimes there is no data for rate_14_day, in those cases strtok only creates 8 tokens!
             if(i == 8){
@@ -260,7 +260,12 @@ void binary_output(fix_t *head, char *filename)
 fix_t *binary_input(char *filename)
 {
     // open file
-    FILE *fp = fopen(filename, "rb");
+    FILE *fp;
+    if((fp = fopen (filename, "rb"))==NULL)
+    {
+        printf("Erro na abertura do ficheiro");
+        exit(EXIT_FAILURE);
+    }
     int i = 0;
     int j = 0;
     fix_t *head;
@@ -353,8 +358,7 @@ void check_string(char *check, fix_t *head, FILE *fp)
     for(int i = 0; i < strlen(check); i++){
         if(!((check[i] >= 'a' && check[i] <= 'z') || (check[i] >= 'A' && check[i] <= 'Z') || (check[i] == ' '))){
             fclose(fp);
-            free_full_list(head);
-            read_error();
+            read_error(head);
         }
     }
 }
@@ -376,8 +380,7 @@ void check_int(char *check, fix_t *head, FILE *fp)
 
         if(!(check[i] >= '0' && check[i] <= '9')){
             fclose(fp);
-            free_full_list(head);
-            read_error();
+            read_error(head);
         }
     }
 }
@@ -399,8 +402,7 @@ void check_float(char *check, fix_t *head, FILE *fp)
     for(int i = 0; i < strlen(check); i++){
         if(!((check[i] >= '0' && check[i] <= '9') || (check[i] == '.'))){
             fclose(fp);
-            free_full_list(head);
-            read_error();
+            read_error(head);
         }
         if(check[i] == '.')
             flag++;
@@ -408,8 +410,7 @@ void check_float(char *check, fix_t *head, FILE *fp)
     //floats only have one '.', more than that is an error
     if(flag > 1){
         fclose(fp);
-        free_full_list(head);
-        read_error();
+        read_error(head);
     }
 }
 
@@ -435,8 +436,7 @@ void check_line(char *line, fix_t *head, FILE *fp)
     //every line on the .csv file has 8 commas
     if(comma_number != 8){
         fclose(fp);
-        free_full_list(head);
-        read_error();
+        read_error(head);
     }
 }
 
@@ -459,15 +459,13 @@ void check_date(char *date, fix_t *head, FILE *fp)
             ifen_number++;
         if((date[i] < '0' || date[i] > '9') && !(date[i] == '-')){
             fclose(fp);
-            free_full_list(head);
-            read_error();
+            read_error(head);
         }
     }
     //dates are on the format year-week, so they only have one ifen
     if(ifen_number != 1){
 		fclose(fp);
-		free_full_list(head);
-        read_error();
+        read_error(head);
 	}
 }
 
@@ -486,8 +484,7 @@ void check_indicator(char *indicator, fix_t *head, FILE *fp)
 {
 	if(strcmp(indicator,"cases") != 0 && strcmp(indicator,"deaths") != 0){
         fclose(fp);
-        free_full_list(head);
-		read_error();
+		read_error(head);
     }
 }
 
@@ -501,8 +498,9 @@ void check_indicator(char *indicator, fix_t *head, FILE *fp)
  * Description: Prints error message and ends program
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void read_error()
+void read_error(fix_t *head)
 {
+	free_full_list(head);
     printf("-1 READ ERROR\n");
     exit(EXIT_FAILURE);
 }

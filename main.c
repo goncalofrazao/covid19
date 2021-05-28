@@ -23,7 +23,6 @@ int main(int argc, char **argv)
 {
     fix_t *head = NULL;
     fix_t *aux1;
-    int flag = 0;
     int n = 0;
     int year = 0;
     int week = 0;
@@ -33,23 +32,22 @@ int main(int argc, char **argv)
     int week2 = 0;
     int read_binary = 0;
     int write_binary = 0;
+    char what_to_read[10];
     // check input minimums
     if(argc < 5){
         console_error();
     }
     // get console input
-    char *what_to_read = get_L(argc, argv);
     char *filename_input = get_input_file_name(argc, argv);
     char *filename_output = get_ouput_file_name(argc, argv);
     order_data order = get_S(argc, argv, &year, &week);
     select_data select = get_D(argc, argv);
     restrict_data restrictor = get_P(argc, argv, &n, &year1, &week1, &year2, &week2);
     // if what_to_read has no input, put it the dafault value (all)
-    if(what_to_read == NULL){
-        what_to_read = (char*) malloc(sizeof(char) * 4);
+    if(get_L(argc, argv) == NULL)
         strcpy(what_to_read, "all");
-        flag = 1;
-    }
+	else
+		strcpy(what_to_read, get_L(argc, argv));
     // check if input and ouput are binary files
     if (filename_input[strlen(filename_input) - 1] == 't')
         read_binary = 1;
@@ -117,9 +115,5 @@ int main(int argc, char **argv)
     else
         output(head, filename_output);
 
-    // free what_to_read if memory has been allocated   
-    if(flag == 1)
-        free(what_to_read);
-    
     return 0;
 }
