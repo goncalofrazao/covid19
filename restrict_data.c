@@ -129,24 +129,21 @@ fix_t *max_pop(fix_t *head, int n)
 
 void restrict_weeks(fix_t *head, int min_week, int min_year, int max_week, int max_year)
 {
-    // create auxiliar struct
-    var_t aux_struct;
-    var_t *aux1 = &aux_struct;
+    var_t *aux1;
     var_t *save;
+    
     while(head != NULL){
-        // initialize auxiliar struct dummy
-        aux1->next = head->var;
+        // create auxiliar struct
+		aux1 = init_auxiliar_struct(head->var);
 		save = aux1;
-        // loop all structs of the list
+        // loop all dates
 		while(aux1->next != NULL){
-            // remove the struct
+            // remove if date is not between the limits
 			if(check_week(aux1->next->year, aux1->next->week, min_week, min_year, max_week, max_year) == -1)
 				remove_var(aux1);
-            // go check next
 			else
 				aux1 = aux1->next;
 		}
-        // go next countrt
 		head->var = save->next;
 		head = head->next;
 	}

@@ -91,7 +91,6 @@ int main(int argc, char **argv)
             aux1 = aux1->next;
         }
     }
-
     // restrict data
     if(restrictor == MIN)
         head = min_pop(head, n);
