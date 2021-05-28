@@ -125,6 +125,7 @@ fix_t *read_input(char *what_to_read, char *filename)
             sscanf(column[6], "%d-%d", &year, &week);
             //there are no years with 54 weeks!
             if(week > 53){
+                fclose(fp);
                 free_full_list(head);
                 read_error();
             }
